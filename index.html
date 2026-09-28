@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 <style>
 /* =========================================================
-   NULA v2.1 · Brand splash + onboarding + animated logo
+   NULA v2.5 — Onboarding + Tour + Contextual tips
    ========================================================= */
 :root{
   --bg:#09090B;--card:#18181B;
@@ -23,6 +23,8 @@
   --accent-soft:rgba(57,255,136,.14);
   --accent-line:rgba(57,255,136,.35);
   --good:#39FF88;--bad:#FF6B7A;
+  --bad-soft:rgba(255,107,122,.14);
+  --bad-line:rgba(255,107,122,.35);
   --r-lg:24px;--r-md:20px;--r-sm:14px;
   --shadow:0 12px 40px rgba(0,0,0,.55);
   --shadow-soft:0 8px 24px rgba(0,0,0,.35);
@@ -31,13 +33,31 @@
 [data-theme="ice"]{--accent:#22D3EE;--accent-soft:rgba(34,211,238,.14);--accent-line:rgba(34,211,238,.38);--good:#22D3EE}
 [data-theme="light"]{
   --bg:#F4F4F5;--card:#FFFFFF;
-  --glass:rgba(255,255,255,.65);
-  --glass-strong:rgba(255,255,255,.82);
-  --glass-border:rgba(15,15,20,.08);
-  --text:#09090B;--muted:#71717A;
+  --glass:rgba(255,255,255,.65);--glass-strong:rgba(255,255,255,.82);
+  --glass-border:rgba(15,15,20,.08);--text:#09090B;--muted:#71717A;
   --line:rgba(15,15,20,.08);
   --shadow:0 12px 40px rgba(15,15,20,.12);
   --shadow-soft:0 8px 24px rgba(15,15,20,.08);
+}
+[data-theme="berry-light"]{
+  --bg:#FDF2F5;--card:#FFFFFF;
+  --glass:rgba(255,255,255,.72);--glass-strong:rgba(255,255,255,.88);
+  --glass-border:rgba(180,20,60,.10);--text:#2A0A14;--muted:#8E6171;
+  --line:rgba(180,20,60,.09);
+  --accent:#FF2D55;--accent-soft:rgba(255,45,85,.12);--accent-line:rgba(255,45,85,.30);
+  --good:#FF2D55;--bad:#D6314C;
+  --shadow:0 12px 40px rgba(180,20,60,.14);
+  --shadow-soft:0 8px 24px rgba(180,20,60,.08);
+}
+[data-theme="ice-light"]{
+  --bg:#EFF7FA;--card:#FFFFFF;
+  --glass:rgba(255,255,255,.72);--glass-strong:rgba(255,255,255,.88);
+  --glass-border:rgba(0,120,150,.10);--text:#07212A;--muted:#5E7C88;
+  --line:rgba(0,120,150,.09);
+  --accent:#0FB8D4;--accent-soft:rgba(15,184,212,.14);--accent-line:rgba(15,184,212,.32);
+  --good:#0FB8D4;--bad:#D6314C;
+  --shadow:0 12px 40px rgba(0,120,150,.14);
+  --shadow-soft:0 8px 24px rgba(0,120,150,.08);
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow:hidden;overscroll-behavior:none}
@@ -59,236 +79,231 @@ body::before{
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer;background:none;border:0;padding:0}
 
-/* =========================================================
-   АНИМИРОВАННЫЙ ЛОГОТИП NULA
-   ========================================================= */
-.nulaLogo{
-  display:block;
-  overflow:visible;
-}
-.nulaLogo .nula-line{
-  stroke:currentColor;
-  stroke-width:2.6;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-  fill:none;
-  stroke-dasharray:60;
-  stroke-dashoffset:60;
-  animation:nulaDraw .9s cubic-bezier(.6,.05,.2,1) forwards;
-}
+.nulaLogo{display:block;overflow:visible}
+.nulaLogo .nula-line{stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;fill:none;stroke-dasharray:60;stroke-dashoffset:60;animation:nulaDraw .9s cubic-bezier(.6,.05,.2,1) forwards}
 .nulaLogo .nula-line.l1{animation-delay:.10s}
 .nulaLogo .nula-line.l2{animation-delay:.28s}
 .nulaLogo .nula-line.l3{animation-delay:.46s}
-.nulaLogo .nula-dot{
-  fill:currentColor;
-  opacity:0;
-  transform-origin:center;
-  animation:nulaDot .7s cubic-bezier(.6,.05,.2,1) .75s forwards;
-}
-.nulaLogo .nula-glow{
-  stroke:currentColor;
-  stroke-width:2.6;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-  fill:none;
-  opacity:0;
-  filter:blur(4px);
-  animation:nulaGlow 2.4s ease-in-out 1.1s infinite;
-}
-@keyframes nulaDraw{
-  to{stroke-dashoffset:0}
-}
-@keyframes nulaDot{
-  0%{opacity:0;transform:scale(.2)}
-  60%{opacity:1;transform:scale(1.25)}
-  100%{opacity:1;transform:scale(1)}
-}
-@keyframes nulaGlow{
-  0%,100%{opacity:.25}
-  50%{opacity:.85}
-}
-
-/* Статичный логотип в шапке — без анимации рисования */
-.brandMark .nulaLogo{
-  width:20px;height:20px;
-}
-.brandMark .nulaLogo .nula-line{
-  stroke-width:3.2;
-  stroke-dasharray:60;
-  stroke-dashoffset:0;
-  animation:none;
-}
-.brandMark .nulaLogo .nula-dot{
-  animation:none;opacity:1;
-}
+.nulaLogo .nula-dot{fill:currentColor;opacity:0;transform-origin:center;animation:nulaDot .7s cubic-bezier(.6,.05,.2,1) .75s forwards}
+.nulaLogo .nula-glow{stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;fill:none;opacity:0;filter:blur(4px);animation:nulaGlow 2.4s ease-in-out 1.1s infinite}
+@keyframes nulaDraw{to{stroke-dashoffset:0}}
+@keyframes nulaDot{0%{opacity:0;transform:scale(.2)}60%{opacity:1;transform:scale(1.25)}100%{opacity:1;transform:scale(1)}}
+@keyframes nulaGlow{0%,100%{opacity:.25}50%{opacity:.85}}
+.brandMark .nulaLogo{width:20px;height:20px}
+.brandMark .nulaLogo .nula-line{stroke-width:3.2;stroke-dasharray:60;stroke-dashoffset:0;animation:none}
+.brandMark .nulaLogo .nula-dot{animation:none;opacity:1}
 .brandMark .nulaLogo .nula-glow{display:none}
 
-/* =========================================================
-   SPLASH SCREEN
-   ========================================================= */
-.splash{
-  position:fixed;inset:0;z-index:200;
-  background:#09090B;
-  display:flex;align-items:center;justify-content:center;flex-direction:column;
-  gap:22px;
-  transition:opacity .55s cubic-bezier(.22,1,.36,1),visibility .55s ease;
-}
-.splash.hide{
-  opacity:0;visibility:hidden;pointer-events:none;
-}
-.splash .nulaLogo{
-  width:96px;height:96px;
-  color:#39FF88;
-  filter:drop-shadow(0 0 24px rgba(57,255,136,.35));
-}
-.splash .brandNameSplash{
-  font-size:22px;font-weight:700;letter-spacing:-.04em;
-  color:#FAFAFA;
-  opacity:0;transform:translateY(6px);
-  animation:splashText .7s cubic-bezier(.22,1,.36,1) 1.2s forwards;
-}
-.splash .brandSubSplash{
-  font-size:11px;font-weight:600;color:#A1A1AA;
-  letter-spacing:.14em;text-transform:uppercase;
-  opacity:0;transform:translateY(6px);
-  animation:splashText .7s cubic-bezier(.22,1,.36,1) 1.32s forwards;
-}
-@keyframes splashText{
-  to{opacity:1;transform:translateY(0)}
-}
+.splash{position:fixed;inset:0;z-index:200;background:#09090B;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:22px;transition:opacity .55s cubic-bezier(.22,1,.36,1),visibility .55s ease}
+.splash.hide{opacity:0;visibility:hidden;pointer-events:none}
+.splash .nulaLogo{width:96px;height:96px;color:#39FF88;filter:drop-shadow(0 0 24px rgba(57,255,136,.35))}
+.splash .brandNameSplash{font-size:22px;font-weight:700;letter-spacing:-.04em;color:#FAFAFA;opacity:0;transform:translateY(6px);animation:splashText .7s cubic-bezier(.22,1,.36,1) 1.2s forwards}
+.splash .brandSubSplash{font-size:11px;font-weight:600;color:#A1A1AA;letter-spacing:.14em;text-transform:uppercase;opacity:0;transform:translateY(6px);animation:splashText .7s cubic-bezier(.22,1,.36,1) 1.32s forwards}
+@keyframes splashText{to{opacity:1;transform:translateY(0)}}
 
 /* =========================================================
-   ONBOARDING
+   Приветственный экран (Welcome)
    ========================================================= */
-.onboarding{
-  position:fixed;inset:0;z-index:150;
-  background:#09090B;
-  display:flex;flex-direction:column;
-  opacity:0;visibility:hidden;
-  transition:opacity .4s ease,visibility .4s ease;
+.welcome{
+  position:fixed;inset:0;z-index:170;
+  background:var(--bg);
+  display:none;flex-direction:column;
+  padding:calc(40px + env(safe-area-inset-top,0px)) 26px calc(30px + env(safe-area-inset-bottom,0px));
+  opacity:0;transition:opacity .45s ease;
+  overflow:hidden;
 }
-.onboarding.show{opacity:1;visibility:visible}
-.onboarding.hide{opacity:0;visibility:hidden;pointer-events:none}
-.obViewport{flex:1;min-height:0;position:relative;overflow:hidden;touch-action:pan-y}
-.obTrack{
-  display:flex;width:300%;height:100%;
-  transition:transform .5s cubic-bezier(.22,1,.36,1);
-  transform:translateZ(0);
+.welcome.show{display:flex;opacity:1}
+.welcome.hide{opacity:0;pointer-events:none}
+.welcome::before{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 700px 500px at 50% -10%, var(--accent-soft), transparent 60%),
+    radial-gradient(ellipse 500px 400px at 90% 100%, rgba(255,255,255,.05), transparent 55%);
 }
-.obTrack.dragging{transition:none}
-.obSlide{
-  width:33.3333%;flex:0 0 33.3333%;height:100%;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:0 34px;text-align:center;gap:20px;
+.welcome .wInner{
+  position:relative;z-index:1;
+  flex:1;display:flex;flex-direction:column;
+  max-width:480px;width:100%;margin:auto;
 }
-.obVisual{
-  width:132px;height:132px;border-radius:32px;
-  display:grid;place-items:center;
-  background:radial-gradient(circle at 50% 30%, rgba(57,255,136,.18), transparent 70%);
-  border:1px solid rgba(57,255,136,.20);
-  position:relative;
+.welcome .wLogo{
+  width:80px;height:80px;color:var(--accent);
+  margin:0 auto 26px;
+  filter:drop-shadow(0 0 24px color-mix(in srgb,var(--accent) 40%,transparent));
 }
-.obVisual svg{width:64px;height:64px;color:#39FF88}
-.obVisual::after{
-  content:"";position:absolute;inset:-2px;border-radius:34px;
-  border:1px solid rgba(57,255,136,.15);
-  animation:obPulse 3s ease-in-out infinite;
+.welcome .wTitle{
+  font-size:32px;font-weight:700;letter-spacing:-.05em;line-height:1.1;
+  text-align:center;margin:0 0 14px;
 }
-@keyframes obPulse{
-  0%,100%{opacity:.3;transform:scale(1)}
-  50%{opacity:0;transform:scale(1.08)}
+.welcome .wTitle span{color:var(--accent)}
+.welcome .wLead{
+  font-size:15px;color:var(--muted);line-height:1.55;text-align:center;
+  margin:0 auto 26px;max-width:340px;font-weight:400;
 }
-.obTitle{
-  font-size:26px;font-weight:700;letter-spacing:-.045em;line-height:1.15;
-  color:#FAFAFA;
+.welcome .wPoints{
+  display:flex;flex-direction:column;gap:12px;
+  margin-top:auto;margin-bottom:26px;
 }
-.obSub{
-  font-size:15px;color:#A1A1AA;line-height:1.5;font-weight:400;
-  max-width:320px;
-}
-.obControls{
-  flex-shrink:0;padding:20px 24px calc(24px + env(safe-area-inset-bottom,0px));
-  display:flex;flex-direction:column;gap:14px;
-}
-.obDots{display:flex;justify-content:center;gap:8px;margin-bottom:4px}
-.obDots span{
-  width:7px;height:7px;border-radius:50%;
-  background:rgba(255,255,255,.15);
-  transition:all .3s ease;
-}
-.obDots span.active{
-  width:22px;border-radius:4px;background:#39FF88;
-}
-.obBtnRow{display:flex;gap:10px}
-.obBtn{
-  flex:1;padding:15px;border-radius:15px;
-  font-size:15px;font-weight:600;
-  background:rgba(255,255,255,.09);
-  color:#FAFAFA;
-  border:1px solid rgba(255,255,255,.09);
-  transition:transform .15s ease,background .2s ease;
-}
-.obBtn:active{transform:scale(.96)}
-.obBtn.skip{
-  flex:0 0 auto;padding:15px 20px;
-  background:transparent;color:#A1A1AA;border-color:transparent;
-}
-.obBtn.primary{
-  background:#39FF88;color:#09090B;border-color:transparent;
-  box-shadow:0 10px 28px rgba(57,255,136,.24);
-}
-
-/* =========================================================
-   ОСНОВНОЙ APP
-   ========================================================= */
-.app{
-  max-width:620px;margin:auto;height:100vh;height:100dvh;
-  display:flex;flex-direction:column;
-  padding-top:env(safe-area-inset-top,0px);
-  opacity:0;transition:opacity .5s ease;
-}
-.app.ready{opacity:1}
-
-.top{display:flex;justify-content:space-between;align-items:center;padding:16px 20px 12px;flex-shrink:0}
-.brand{display:flex;align-items:center;gap:10px}
-.brandMark{
-  width:32px;height:32px;border-radius:10px;display:grid;place-items:center;
-  background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 70%,#000));
-  color:#09090B;
-  box-shadow:0 6px 18px color-mix(in srgb,var(--accent) 22%,transparent);
-}
-.brandName{font-size:17px;font-weight:700;letter-spacing:-.04em}
-.brandName small{display:block;font-size:9.5px;font-weight:600;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
-.iconBtn{
-  width:40px;height:40px;border-radius:13px;display:grid;place-items:center;
+.welcome .wPoint{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:14px 16px;border-radius:16px;
   background:var(--glass);border:1px solid var(--glass-border);
   backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  transition:transform .15s ease,background .2s ease;
+  opacity:0;transform:translateY(8px);
+  animation:wFade .5s cubic-bezier(.22,1,.36,1) forwards;
 }
+.welcome .wPoint:nth-child(1){animation-delay:.45s}
+.welcome .wPoint:nth-child(2){animation-delay:.58s}
+.welcome .wPoint:nth-child(3){animation-delay:.71s}
+@keyframes wFade{to{opacity:1;transform:translateY(0)}}
+.welcome .wPoint .wpIco{
+  width:36px;height:36px;border-radius:11px;flex-shrink:0;
+  display:grid;place-items:center;
+  background:var(--accent-soft);color:var(--accent);
+  border:1px solid var(--accent-line);
+}
+.welcome .wPoint .wpIco svg{width:18px;height:18px}
+.welcome .wPoint .wpBody .wpT{font-size:13.5px;font-weight:600;letter-spacing:-.015em}
+.welcome .wPoint .wpBody .wpS{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.4}
+.welcome .wActions{display:flex;flex-direction:column;gap:10px}
+.welcome .wActions .btn{padding:15px}
+
+/* =========================================================
+   Tour overlay (подсветка + подсказка)
+   ========================================================= */
+.tour{
+  position:fixed;inset:0;z-index:180;
+  display:none;opacity:0;transition:opacity .3s ease;
+  pointer-events:none;
+}
+.tour.show{display:block;opacity:1}
+.tour .tBackdrop{
+  position:absolute;inset:0;
+  background:rgba(0,0,0,.72);
+  pointer-events:auto;
+}
+/* Подсветка нужной области */
+.tour .tSpot{
+  position:absolute;
+  border-radius:20px;
+  box-shadow:0 0 0 9999px rgba(0,0,0,.72),
+             0 0 0 2px var(--accent),
+             0 0 30px 6px color-mix(in srgb,var(--accent) 35%,transparent);
+  transition:top .4s cubic-bezier(.22,1,.36,1),
+             left .4s cubic-bezier(.22,1,.36,1),
+             width .4s cubic-bezier(.22,1,.36,1),
+             height .4s cubic-bezier(.22,1,.36,1),
+             box-shadow .3s ease;
+  pointer-events:none;
+  background:transparent;
+}
+.tour .tSpot::after{
+  content:"";position:absolute;inset:-6px;border-radius:26px;
+  border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);
+  animation:tSpotPulse 2s ease-in-out infinite;
+}
+@keyframes tSpotPulse{
+  0%,100%{opacity:.35;transform:scale(1)}
+  50%{opacity:.9;transform:scale(1.015)}
+}
+/* Карточка-подсказка */
+.tour .tCard{
+  position:absolute;
+  left:50%;transform:translateX(-50%);
+  width:min(420px,calc(100% - 32px));
+  padding:22px 22px 18px;
+  border-radius:24px;
+  background:var(--card);
+  border:1px solid var(--glass-border);
+  box-shadow:0 20px 60px rgba(0,0,0,.55);
+  pointer-events:auto;
+  transition:top .4s cubic-bezier(.22,1,.36,1),bottom .4s cubic-bezier(.22,1,.36,1);
+}
+.tour .tCard.atBottom{bottom:calc(28px + env(safe-area-inset-bottom,0px));top:auto}
+.tour .tCard.atTop{top:calc(28px + env(safe-area-inset-top,0px));bottom:auto}
+.tour .tStep{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:700;letter-spacing:.08em;
+  color:var(--accent);text-transform:uppercase;margin-bottom:10px;
+}
+.tour .tStep .tBar{display:flex;gap:4px}
+.tour .tStep .tBar i{
+  display:block;width:14px;height:3px;border-radius:2px;
+  background:rgba(128,128,128,.25);transition:background .25s ease;
+}
+.tour .tStep .tBar i.on{background:var(--accent)}
+.tour .tTitle{
+  font-size:20px;font-weight:700;letter-spacing:-.035em;line-height:1.15;
+  margin:0 0 8px;
+}
+.tour .tText{
+  font-size:14px;color:var(--muted);line-height:1.55;margin:0 0 18px;font-weight:400;
+}
+.tour .tActions{display:flex;gap:10px}
+.tour .tActions .btn{flex:1;padding:13px}
+.tour .tActions .btn.ghost{flex:0 0 auto;padding:13px 16px;color:var(--muted)}
+.tour .tClose{
+  position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:10px;
+  display:grid;place-items:center;color:var(--muted);
+  background:var(--glass);border:1px solid var(--glass-border);
+}
+
+/* =========================================================
+   Contextual tip (короткая подсказка при первом входе)
+   ========================================================= */
+.tipBubble{
+  position:fixed;z-index:70;
+  left:50%;bottom:calc(120px + env(safe-area-inset-bottom,0px));
+  transform:translate(-50%,14px);
+  width:min(400px,calc(100% - 28px));
+  padding:16px 18px 16px 18px;
+  border-radius:20px;
+  background:var(--card);
+  border:1px solid var(--glass-border);
+  box-shadow:0 16px 40px rgba(0,0,0,.5);
+  opacity:0;pointer-events:none;
+  transition:opacity .3s ease,transform .3s cubic-bezier(.22,1,.36,1);
+}
+.tipBubble.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.tipBubble .tbHead{display:flex;gap:10px;align-items:flex-start}
+.tipBubble .tbIco{
+  width:32px;height:32px;border-radius:10px;flex-shrink:0;
+  display:grid;place-items:center;
+  background:var(--accent-soft);color:var(--accent);
+  border:1px solid var(--accent-line);
+}
+.tipBubble .tbIco svg{width:16px;height:16px}
+.tipBubble .tbBody{flex:1;min-width:0}
+.tipBubble .tbT{font-size:13.5px;font-weight:700;letter-spacing:-.015em}
+.tipBubble .tbS{font-size:12.5px;color:var(--muted);line-height:1.5;margin-top:4px}
+.tipBubble .tbActions{display:flex;gap:8px;margin-top:12px;justify-content:flex-end}
+.tipBubble .tbActions button{
+  padding:8px 14px;border-radius:10px;font-size:12.5px;font-weight:600;
+  background:var(--glass-strong);border:1px solid var(--glass-border);color:var(--text);
+}
+.tipBubble .tbActions button.primary{background:var(--accent);color:var(--bg);border-color:transparent}
+
+/* =========================================================
+   Основное приложение
+   ========================================================= */
+.app{max-width:620px;margin:auto;height:100vh;height:100dvh;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);opacity:0;transition:opacity .5s ease}
+.app.ready{opacity:1}
+.top{display:flex;justify-content:space-between;align-items:center;padding:16px 20px 12px;flex-shrink:0}
+.brand{display:flex;align-items:center;gap:10px}
+.brandMark{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 70%,#000));color:var(--bg);box-shadow:0 6px 18px color-mix(in srgb,var(--accent) 22%,transparent)}
+.brandName{font-size:17px;font-weight:700;letter-spacing:-.04em}
+.brandName small{display:block;font-size:9.5px;font-weight:600;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+.iconBtn{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;background:var(--glass);border:1px solid var(--glass-border);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:transform .15s ease,background .2s ease}
 .iconBtn:active{transform:scale(.94)}
 .iconBtn svg{width:19px;height:19px;color:var(--text)}
 
 .viewport{flex:1 1 auto;min-height:0;overflow:hidden;position:relative;touch-action:pan-y}
-.track{display:flex;width:500%;height:100%;transition:transform .42s cubic-bezier(.22,1,.36,1);transform:translateZ(0)}
+.track{display:flex;width:600%;height:100%;transition:transform .42s cubic-bezier(.22,1,.36,1);transform:translateZ(0)}
 .track.dragging{transition:none}
-.screen{
-  width:20%;flex:0 0 20%;height:100%;overflow-y:auto;overflow-x:hidden;
-  -webkit-overflow-scrolling:touch;
-  padding:0 16px calc(112px + env(safe-area-inset-bottom,0px));
-  opacity:.4;transition:opacity .28s ease;
-  scrollbar-width:none;-ms-overflow-style:none;
-}
+.screen{width:16.6667%;flex:0 0 16.6667%;height:100%;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:0 16px calc(112px + env(safe-area-inset-bottom,0px));opacity:.4;transition:opacity .28s ease;scrollbar-width:none;-ms-overflow-style:none}
 .screen::-webkit-scrollbar{display:none}
 .screen.active{opacity:1}
 
-.card{
-  background:var(--glass);border:1px solid var(--glass-border);
-  border-radius:var(--r-lg);padding:20px;margin-bottom:12px;
-  backdrop-filter:blur(20px) saturate(140%);
-  -webkit-backdrop-filter:blur(20px) saturate(140%);
-  box-shadow:var(--shadow-soft);
-  position:relative;overflow:hidden;
-}
+.card{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--r-lg);padding:20px;margin-bottom:12px;backdrop-filter:blur(20px) saturate(140%);-webkit-backdrop-filter:blur(20px) saturate(140%);box-shadow:var(--shadow-soft);position:relative;overflow:hidden}
 .card.solid{background:var(--card)}
 
 .eyebrow{font-size:11.5px;color:var(--muted);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
@@ -298,153 +313,100 @@ button{cursor:pointer;background:none;border:0;padding:0}
 .label{font-size:12px;color:var(--muted);font-weight:600}
 .num{font-variant-numeric:tabular-nums;font-weight:600}
 
-.bar{height:12px;border-radius:99px;overflow:hidden;background:rgba(255,255,255,.06);border:1px solid var(--line);position:relative}
-[data-theme="light"] .bar{background:rgba(15,15,20,.06)}
-.bar > i{
-  display:block;height:100%;width:0;border-radius:99px;
-  background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 70%,#fff),var(--accent));
-  position:relative;overflow:hidden;
-  box-shadow:0 0 14px color-mix(in srgb,var(--accent) 45%,transparent);
-  transition:width 1s cubic-bezier(.22,1,.36,1);
-}
-.bar > i::after{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.5) 50%,transparent 70%);
-  transform:translateX(-100%);
-  animation:shine 2.6s ease-in-out infinite;
-}
+.bar{height:12px;border-radius:99px;overflow:hidden;background:rgba(128,128,128,.15);border:1px solid var(--line);position:relative}
+.bar>i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 70%,#fff),var(--accent));position:relative;overflow:hidden;box-shadow:0 0 14px color-mix(in srgb,var(--accent) 45%,transparent);transition:width 1s cubic-bezier(.22,1,.36,1)}
+.bar>i::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.5) 50%,transparent 70%);transform:translateX(-100%);animation:shine 2.6s ease-in-out infinite}
 @keyframes shine{0%,55%{transform:translateX(-110%)}85%,100%{transform:translateX(110%)}}
 .bar.thin{height:7px}
-.bar.thin > i{box-shadow:none}
+.bar.thin>i{box-shadow:none}
 
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  padding:13px 16px;border-radius:15px;font-weight:600;font-size:14px;
-  background:var(--glass-strong);border:1px solid var(--glass-border);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  color:var(--text);
-  transition:transform .15s ease,background .2s ease,border-color .2s ease;
-}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 16px;border-radius:15px;font-weight:600;font-size:14px;background:var(--glass-strong);border:1px solid var(--glass-border);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);color:var(--text);transition:transform .15s ease,background .2s ease,border-color .2s ease}
 .btn:active{transform:scale(.96)}
-.btn.primary{
-  background:var(--accent);color:#09090B;border-color:transparent;
-  box-shadow:0 10px 28px color-mix(in srgb,var(--accent) 28%,transparent);
-}
+.btn.primary{background:var(--accent);color:var(--bg);border-color:transparent;box-shadow:0 10px 28px color-mix(in srgb,var(--accent) 28%,transparent)}
 .btn.primary:active{filter:brightness(1.05)}
 .btn.block{width:100%}
-.btn.danger{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 25%,transparent)}
+.btn.danger{color:var(--bad);border-color:var(--bad-line);background:var(--bad-soft)}
+.btn.ghost{background:transparent;border-color:transparent;color:var(--muted)}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 
-.metric{
-  background:var(--glass);border:1px solid var(--glass-border);
-  border-radius:var(--r-md);padding:14px;
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-}
+.metric{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--r-md);padding:14px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
 .metric .v{font-size:18px;font-weight:600;letter-spacing:-.03em;margin-top:2px}
 .metric .s{font-size:11px;color:var(--muted);margin-top:5px;font-weight:400}
 
-.nav{
-  flex-shrink:0;align-self:center;
-  width:calc(100% - 24px);max-width:580px;
-  margin:0 12px calc(10px + env(safe-area-inset-bottom,0px));
-  display:grid;grid-template-columns:repeat(5,1fr);gap:4px;
-  padding:8px;border-radius:22px;
-  background:rgba(24,24,27,.72);border:1px solid var(--glass-border);
-  backdrop-filter:blur(24px) saturate(160%);
-  -webkit-backdrop-filter:blur(24px) saturate(160%);
-  box-shadow:0 12px 36px rgba(0,0,0,.5);
-  z-index:5;
-}
-[data-theme="light"] .nav{background:rgba(255,255,255,.75)}
-.nav button{
-  padding:8px 4px;border-radius:14px;color:var(--muted);
-  display:flex;flex-direction:column;align-items:center;gap:3px;
-  position:relative;transition:color .2s ease,background .2s ease,transform .15s ease;
-}
-.nav button small{font-size:10px;font-weight:600}
-.nav button.active{color:var(--text);background:rgba(255,255,255,.06)}
-[data-theme="light"] .nav button.active{background:rgba(15,15,20,.06)}
+.nav{flex-shrink:0;align-self:center;width:calc(100% - 24px);max-width:580px;margin:0 12px calc(10px + env(safe-area-inset-bottom,0px));display:grid;grid-template-columns:repeat(6,1fr);gap:2px;padding:7px;border-radius:22px;background:color-mix(in srgb,var(--card) 80%,transparent);border:1px solid var(--glass-border);backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);box-shadow:0 12px 36px rgba(0,0,0,.35);z-index:5}
+.nav button{padding:7px 2px;border-radius:13px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:2px;position:relative;transition:color .2s ease,background .2s ease,transform .15s ease}
+.nav button small{font-size:9.5px;font-weight:600;letter-spacing:-.01em}
+.nav button.active{color:var(--text);background:rgba(128,128,128,.10)}
 .nav button:active{transform:scale(.92)}
-.navIcon{width:22px;height:22px;display:block}
+.navIcon{width:20px;height:20px;display:block}
 .nav button.active .navIcon{color:var(--accent)}
-.nav button.active::after{
-  content:"";position:absolute;bottom:3px;left:50%;transform:translateX(-50%);
-  width:4px;height:4px;border-radius:50%;background:var(--accent);
-  box-shadow:0 0 8px var(--accent);
-}
+.nav button.active::after{content:"";position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent)}
 
-.sheet{
-  position:fixed;inset:0;background:rgba(0,0,0,.55);
-  display:none;align-items:flex-end;z-index:50;
-  opacity:0;transition:opacity .24s ease;touch-action:none;
-  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
-}
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:flex-end;z-index:50;opacity:0;transition:opacity .24s ease;touch-action:none;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
 .sheet.open{display:flex;opacity:1}
-.modal{
-  width:min(620px,100%);margin:auto auto 0;
-  background:var(--card);border:1px solid var(--glass-border);
-  border-radius:28px 28px 0 0;padding:22px;
-  padding-bottom:calc(22px + env(safe-area-inset-bottom,0px));
-  max-height:92vh;overflow:auto;touch-action:pan-y;
-  transform:translateY(24px);transition:transform .3s cubic-bezier(.2,.85,.2,1);
-  box-shadow:0 -20px 60px rgba(0,0,0,.6);
-}
-[data-theme="light"] .modal{background:#FCFCFD}
+.modal{width:min(620px,100%);margin:auto auto 0;background:var(--card);border:1px solid var(--glass-border);border-radius:28px 28px 0 0;padding:22px;padding-bottom:calc(22px + env(safe-area-inset-bottom,0px));max-height:92vh;overflow:auto;touch-action:pan-y;transform:translateY(24px);transition:transform .3s cubic-bezier(.2,.85,.2,1);box-shadow:0 -20px 60px rgba(0,0,0,.6)}
 .sheet.open .modal{transform:translateY(0)}
 .sheet.dragging .modal{transition:none}
 .modal h2{margin:0 0 18px;font-size:21px;font-weight:700;letter-spacing:-.03em}
-.modal .close{
-  float:right;width:36px;height:36px;border-radius:12px;
-  display:grid;place-items:center;color:var(--muted);
-  background:var(--glass);border:1px solid var(--glass-border);
-}
+.modal .close{float:right;width:36px;height:36px;border-radius:12px;display:grid;place-items:center;color:var(--muted);background:var(--glass);border:1px solid var(--glass-border)}
 label{display:block;font-size:12px;color:var(--muted);margin-top:8px;font-weight:600}
-input,select{
-  width:100%;padding:13px 14px;margin:6px 0 12px;
-  background:var(--glass);border:1px solid var(--glass-border);
-  border-radius:14px;outline:none;font-size:16px;color:var(--text);
-  transition:border-color .15s ease,box-shadow .15s ease;
-}
+input,select{width:100%;padding:13px 14px;margin:6px 0 12px;background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;outline:none;font-size:16px;color:var(--text);transition:border-color .15s ease,box-shadow .15s ease}
 input:focus,select:focus{border-color:var(--accent-line);box-shadow:0 0 0 4px var(--accent-soft)}
 input::placeholder{color:var(--muted);opacity:.7}
 
-.goalRow{
-  display:flex;flex-direction:column;gap:6px;
-  padding:13px 14px;border-radius:16px;margin-bottom:8px;
-  background:var(--glass);border:1px solid var(--glass-border);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  transition:transform .15s ease;
-}
-.goalRow:active{transform:scale(.985)}
+.goalRow{display:flex;flex-direction:column;gap:6px;padding:14px;border-radius:16px;margin-bottom:8px;background:var(--glass);border:1px solid var(--glass-border);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:transform .15s ease}
+.goalRow:active{transform:scale(.99)}
+.goalRow.done{border-color:var(--accent-line);background:var(--accent-soft)}
 .goalRow .head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
-.goalRow .name{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.goalRow .name{font-size:15px;font-weight:700;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .goalRow .pct{font-size:13px;font-weight:700;color:var(--accent);flex-shrink:0;font-variant-numeric:tabular-nums}
-.goalRow .sum{font-size:11px;color:var(--muted);margin-top:2px}
-.empty{text-align:center;color:var(--muted);font-size:13px;padding:22px 10px;border-radius:16px;background:var(--glass);border:1px dashed var(--glass-border)}
+.goalRow .sum{font-size:11.5px;color:var(--muted);margin-top:1px}
+.goalRow .forecast{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--muted);margin-top:6px}
+.goalRow .forecast .fIco{width:13px;height:13px;color:var(--accent);flex-shrink:0}
+.goalRow .gActions{display:flex;gap:6px;margin-top:10px}
+.goalRow .gActions button{flex:1;padding:10px 8px;border-radius:11px;font-size:12.5px;font-weight:600;background:var(--glass-strong);border:1px solid var(--glass-border);color:var(--text);transition:transform .15s ease;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.goalRow .gActions button:active{transform:scale(.95)}
+.goalRow .gActions button.danger{color:var(--bad);border-color:var(--bad-line);background:var(--bad-soft)}
+.goalRow .gActions svg{width:14px;height:14px}
 
-.debtCard{
-  background:var(--glass);border:1px solid var(--glass-border);
-  border-radius:var(--r-md);padding:16px;margin-bottom:10px;
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  box-shadow:var(--shadow-soft);
-}
+.empty{text-align:center;color:var(--muted);font-size:13px;padding:22px 10px;border-radius:16px;background:var(--glass);border:1px dashed var(--glass-border)}
+.emptyBig{text-align:center;padding:34px 20px;border-radius:20px;background:var(--glass);border:1px dashed var(--glass-border)}
+.emptyBig .ebIco{width:64px;height:64px;border-radius:20px;display:grid;place-items:center;margin:0 auto 16px;background:var(--accent-soft);border:1px solid var(--accent-line);color:var(--accent)}
+.emptyBig .ebIco svg{width:28px;height:28px}
+.emptyBig .ebTitle{font-size:17px;font-weight:700;letter-spacing:-.03em;color:var(--text);margin:0 0 6px}
+.emptyBig .ebText{font-size:13px;color:var(--muted);line-height:1.5;margin:0 0 18px;max-width:280px;margin-left:auto;margin-right:auto}
+
+.goalsSummary{position:relative}
+.goalsSummary .gBig{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.goalsSummary .gBig .v{font-size:34px;font-weight:700;letter-spacing:-.055em;font-variant-numeric:tabular-nums}
+.goalsSummary .gBig .of{font-size:15px;color:var(--muted);font-weight:600}
+.goalsSummary .gSub{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.goalsSummary .gPct{font-size:15px;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
+.goalsStats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.goalsStats .st{display:flex;flex-direction:column;gap:2px}
+.goalsStats .st .k{font-size:10.5px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.goalsStats .st .v{font-size:14px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+
+.forecastRow{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:14px;background:var(--glass);border:1px solid var(--glass-border);margin-top:10px}
+.forecastRow .frIco{width:36px;height:36px;border-radius:11px;flex-shrink:0;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)}
+.forecastRow .frIco svg{width:18px;height:18px}
+.forecastRow .frBody .frT{font-size:13px;font-weight:600;letter-spacing:-.015em}
+.forecastRow .frBody .frS{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.4}
+
+.debtCard{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--r-md);padding:16px;margin-bottom:10px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:var(--shadow-soft)}
 .debtCard .head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
 .debtCard .name{font-size:16px;font-weight:700;letter-spacing:-.025em}
 .debtCard .who{font-size:11px;color:var(--muted);margin-top:3px}
 .debtCard .left{font-size:20px;font-weight:700;letter-spacing:-.035em;white-space:nowrap;font-variant-numeric:tabular-nums}
 .debtCard .stats{display:flex;justify-content:space-between;gap:10px;font-size:11px;color:var(--muted);margin-top:8px}
-.debtCard .rowActions{display:flex;gap:8px;margin-top:12px}
-.debtCard .rowActions .btn{flex:1;padding:10px;font-size:13px}
+.debtCard .rowActions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:12px}
+.debtCard .rowActions .btn{padding:10px 6px;font-size:12px;gap:5px}
+.debtCard .rowActions svg{width:14px;height:14px}
 .debtCard .dueRow{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
 .debtCard .dueRow .due{font-weight:600;color:var(--text)}
 
-.tx{
-  display:flex;justify-content:space-between;align-items:center;gap:12px;
-  padding:13px 15px;border-radius:14px;margin-bottom:6px;
-  background:var(--glass);border:1px solid var(--glass-border);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-}
+.tx{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 15px;border-radius:14px;margin-bottom:6px;background:var(--glass);border:1px solid var(--glass-border);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
 .tx .t{font-size:14px;font-weight:600}
 .tx .s{font-size:11px;color:var(--muted);margin-top:2px}
 .tx .sum{font-weight:700;font-size:14px;white-space:nowrap;font-variant-numeric:tabular-nums}
@@ -454,12 +416,12 @@ input::placeholder{color:var(--muted);opacity:.7}
 
 .seg{display:flex;gap:2px;padding:4px;background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;overflow:hidden}
 .seg button{flex:1;padding:10px 8px;border-radius:11px;color:var(--muted);font-size:13px;font-weight:600;transition:background .2s ease,color .2s ease}
-.seg button.sel{background:var(--accent);color:#09090B}
+.seg button.sel{background:var(--accent);color:var(--bg)}
 
 .anTotal{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 .anTotal .val{font-size:36px;font-weight:700;letter-spacing:-.06em;font-variant-numeric:tabular-nums}
 .delta{font-size:12px;font-weight:600;padding:4px 9px;border-radius:9px}
-.delta.up{color:var(--bad);background:color-mix(in srgb,var(--bad) 14%,transparent)}
+.delta.up{color:var(--bad);background:var(--bad-soft)}
 .delta.down{color:var(--accent);background:var(--accent-soft)}
 .chartType{display:flex;gap:4px;padding:4px;border-radius:13px;background:var(--glass);border:1px solid var(--glass-border)}
 .chartType button{width:38px;height:34px;border-radius:10px;display:grid;place-items:center;color:var(--muted)}
@@ -480,13 +442,7 @@ input::placeholder{color:var(--muted);opacity:.7}
 .barRect{width:100%;max-width:22px;border-radius:6px 6px 3px 3px;min-height:3px;transition:height .55s cubic-bezier(.22,1,.36,1)}
 .barLabel{font-size:9px;color:var(--muted);margin-top:6px;height:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;font-variant-numeric:tabular-nums}
 
-.insight{
-  display:flex;gap:12px;align-items:flex-start;
-  padding:14px;border-radius:16px;margin-bottom:8px;
-  background:var(--glass);border:1px solid var(--glass-border);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  animation:softIn .45s cubic-bezier(.22,1,.36,1) both;
-}
+.insight{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:16px;margin-bottom:8px;background:var(--glass);border:1px solid var(--glass-border);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);animation:softIn .45s cubic-bezier(.22,1,.36,1) both}
 .insight .ico{width:36px;height:36px;border-radius:11px;flex-shrink:0;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)}
 .insight .ico svg{width:18px;height:18px}
 .insight .body .ttl{font-size:13.5px;font-weight:600;letter-spacing:-.015em}
@@ -503,7 +459,7 @@ input::placeholder{color:var(--muted);opacity:.7}
 .toolTabs{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto}
 .toolTabs::-webkit-scrollbar{display:none}
 .toolTabs button{padding:9px 13px;border-radius:11px;white-space:nowrap;background:var(--glass);border:1px solid var(--glass-border);color:var(--muted);font-size:12.5px;font-weight:600}
-.toolTabs button.sel{background:var(--accent);color:#09090B;border-color:transparent}
+.toolTabs button.sel{background:var(--accent);color:var(--bg);border-color:transparent}
 .calcDisplay{padding:16px 18px;text-align:right;min-height:92px;display:flex;flex-direction:column;justify-content:flex-end;border-radius:16px;margin-bottom:10px;background:var(--glass);border:1px solid var(--glass-border)}
 .calcExpr{font-size:13px;color:var(--muted);min-height:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .calcValue{font-size:36px;font-weight:700;letter-spacing:-.05em;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
@@ -511,21 +467,57 @@ input::placeholder{color:var(--muted);opacity:.7}
 .calcKey{min-height:54px;border-radius:15px;font-size:19px;font-weight:600;background:var(--glass);border:1px solid var(--glass-border);transition:transform .12s ease,background .15s ease}
 .calcKey:active{transform:scale(.94)}
 .calcKey.op{color:var(--accent)}
-.calcKey.equal{background:var(--accent);color:#09090B;border-color:transparent}
+.calcKey.equal{background:var(--accent);color:var(--bg);border-color:transparent}
 .calcResult{margin-top:12px;padding:16px;border-radius:15px;background:var(--accent-soft);border:1px solid var(--accent-line)}
 .calcResult .label{color:var(--muted);font-size:11px;text-transform:uppercase}
 .calcResult .value{font-size:26px;font-weight:700;letter-spacing:-.04em;margin-top:4px;font-variant-numeric:tabular-nums}
 
-.toast{
-  position:fixed;z-index:300;left:50%;
-  bottom:calc(100px + env(safe-area-inset-bottom,0px));
-  transform:translate(-50%,20px);opacity:0;
-  padding:12px 18px;border-radius:14px;font-size:13px;font-weight:600;
-  background:var(--glass-strong);border:1px solid var(--glass-border);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  transition:opacity .22s ease,transform .22s ease;pointer-events:none;
-  box-shadow:var(--shadow-soft);
-}
+.themeSection{margin-top:20px}
+.themeSection:first-of-type{margin-top:6px}
+.themeSectionLabel{font-size:11.5px;color:var(--muted);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin:0 0 10px}
+.themeDual{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:6px;background:var(--glass);border:1px solid var(--glass-border);border-radius:22px}
+.themeDual .half{border-radius:17px;padding:14px 10px;display:flex;flex-direction:column;align-items:center;gap:8px;border:1px solid transparent;transition:transform .15s ease,border-color .2s ease,background .2s ease;cursor:pointer}
+.themeDual .half:active{transform:scale(.97)}
+.themeDual .half.sel{border-color:var(--accent-line);background:var(--accent-soft)}
+.themeDual .halfPreview{width:100%;height:56px;border-radius:12px;display:grid;place-items:center;position:relative;overflow:hidden}
+.themeDual .halfPreview svg{width:22px;height:22px}
+.themeDual .halfLabel{font-size:11.5px;font-weight:600;color:var(--text);text-align:center;line-height:1.3}
+.themeDual .halfLabel small{display:block;font-size:10px;color:var(--muted);font-weight:500;margin-top:2px}
+.themeDual .pBerryDark{background:#13070D}
+.themeDual .pBerryDark svg{color:#FF2D55}
+.themeDual .pBerryLight{background:#FDF2F5}
+.themeDual .pBerryLight svg{color:#FF2D55}
+.themeDual .pIceDark{background:#0A1418}
+.themeDual .pIceDark svg{color:#22D3EE}
+.themeDual .pIceLight{background:#EFF7FA}
+.themeDual .pIceLight svg{color:#0FB8D4}
+.themeSingle{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:6px;background:var(--glass);border:1px solid var(--glass-border);border-radius:22px}
+.themeSingle .opt{padding:14px 10px;border-radius:17px;display:flex;flex-direction:column;align-items:center;gap:8px;border:1px solid transparent;cursor:pointer;transition:transform .15s ease,border-color .2s ease,background .2s ease}
+.themeSingle .opt:active{transform:scale(.97)}
+.themeSingle .opt.sel{border-color:var(--accent-line);background:var(--accent-soft)}
+.themeSingle .optPreview{width:100%;height:56px;border-radius:12px;display:grid;place-items:center}
+.themeSingle .optPreview svg{width:22px;height:22px}
+.themeSingle .pDark{background:#09090B}
+.themeSingle .pDark svg{color:#39FF88}
+.themeSingle .pLight{background:#F4F4F5}
+.themeSingle .pLight svg{color:#09090B}
+.themeSingle .optLabel{font-size:11.5px;font-weight:600;color:var(--text);text-align:center}
+
+.confirmSheet{position:fixed;inset:0;z-index:80;display:none;align-items:flex-end;opacity:0;transition:opacity .22s ease;touch-action:none}
+.confirmSheet.open{display:flex;opacity:1}
+.confirmSheet .backdrop{position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.confirmCard{position:relative;z-index:1;width:min(560px,calc(100% - 24px));margin:0 auto calc(12px + env(safe-area-inset-bottom,0px));background:var(--card);border:1px solid var(--glass-border);border-radius:26px;padding:26px 22px 22px;box-shadow:0 20px 60px rgba(0,0,0,.6);transform:translateY(28px);transition:transform .32s cubic-bezier(.2,.85,.2,1);text-align:center}
+.confirmSheet.open .confirmCard{transform:translateY(0)}
+.confirmIco{width:60px;height:60px;border-radius:18px;display:grid;place-items:center;margin:0 auto 18px;background:var(--bad-soft);border:1px solid var(--bad-line);color:var(--bad)}
+.confirmIco svg{width:26px;height:26px}
+.confirmTitle{font-size:20px;font-weight:700;letter-spacing:-.03em;margin:0 0 8px}
+.confirmText{font-size:13.5px;color:var(--muted);line-height:1.5;margin:0 0 6px}
+.confirmTarget{font-size:15px;font-weight:600;color:var(--text);margin:10px 0 18px;word-break:break-word}
+.confirmHint{font-size:11.5px;color:var(--muted);margin:0 0 22px;line-height:1.45}
+.confirmActions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.confirmActions .btn{padding:14px}
+
+.toast{position:fixed;z-index:300;left:50%;bottom:calc(100px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);opacity:0;padding:12px 18px;border-radius:14px;font-size:13px;font-weight:600;background:var(--glass-strong);border:1px solid var(--glass-border);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:opacity .22s ease,transform .22s ease;pointer-events:none;box-shadow:var(--shadow-soft)}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
 .card,.metric,.debtCard,.goalRow,.tx,.insight{animation:softIn .42s cubic-bezier(.22,1,.36,1) both}
@@ -540,72 +532,100 @@ input::placeholder{color:var(--muted);opacity:.7}
 .actIco{width:18px;height:18px;vertical-align:-3px;margin-right:6px}
 
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
-@media (max-width:520px){.h1{font-size:40px}.h2{font-size:28px}.card{padding:18px}}
+@media (max-width:520px){.h1{font-size:40px}.h2{font-size:28px}.card{padding:18px}.nav button small{font-size:9px}}
 </style>
 </head>
 <body>
 
 <!-- =========================================================
-     SPLASH SCREEN
+     Splash
      ========================================================= -->
 <div class="splash" id="splash">
   <svg class="nulaLogo" viewBox="0 0 64 64" aria-label="Nula">
-    <path class="nula-line l1" d="M18 48 L18 16" />
-    <path class="nula-line l2" d="M18 16 L46 48" />
-    <path class="nula-line l3" d="M46 48 L46 16" />
+    <path class="nula-line l1" d="M18 48 L18 16"/>
+    <path class="nula-line l2" d="M18 16 L46 48"/>
+    <path class="nula-line l3" d="M46 48 L46 16"/>
     <circle class="nula-dot" cx="46" cy="16" r="3.4"/>
-    <path class="nula-glow" d="M18 48 L18 16 L46 48 L46 16" />
+    <path class="nula-glow" d="M18 48 L18 16 L46 48 L46 16"/>
   </svg>
   <div class="brandNameSplash">Nula</div>
   <div class="brandSubSplash">Financial Navigator</div>
 </div>
 
 <!-- =========================================================
-     ONBOARDING
+     Welcome (приветственный экран)
      ========================================================= -->
-<div class="onboarding" id="onboarding">
-  <div class="obViewport" id="obViewport">
-    <div class="obTrack" id="obTrack">
+<div class="welcome" id="welcome">
+  <div class="wInner">
+    <svg class="wLogo nulaLogo" viewBox="0 0 64 64">
+      <path class="nula-line l1" d="M18 48 L18 16"/>
+      <path class="nula-line l2" d="M18 16 L46 48"/>
+      <path class="nula-line l3" d="M46 48 L46 16"/>
+      <circle class="nula-dot" cx="46" cy="16" r="3.4"/>
+      <path class="nula-glow" d="M18 48 L18 16 L46 48 L46 16"/>
+    </svg>
+    <div class="wTitle">Добро пожаловать в <span>Nula</span></div>
+    <div class="wLead">Твой личный финансовый навигатор. Помогает контролировать деньги, закрывать долги и двигаться к накоплениям.</div>
 
-      <div class="obSlide">
-        <div class="obVisual">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M4 19h16M6 19V9l6-4 6 4v10M10 19v-5h4v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="obTitle">Добро пожаловать в Nula</div>
-        <div class="obSub">Твой путь к финансовому контролю</div>
+    <div class="wPoints">
+      <div class="wPoint">
+        <div class="wpIco"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3v18M7 8h7a3 3 0 1 1 0 6H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="wpBody"><div class="wpT">Видишь путь к нулю</div><div class="wpS">Закрываешь долги шаг за шагом</div></div>
       </div>
-
-      <div class="obSlide">
-        <div class="obVisual">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M4 19V5m0 14h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="m7 15 3-4 3 2 5-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="obTitle">Отслеживай прогресс</div>
-        <div class="obSub">Каждый платеж приближает тебя к цели</div>
+      <div class="wPoint">
+        <div class="wpIco"><svg viewBox="0 0 24 24" fill="none"><path d="M4 19V5m0 14h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="m7 15 3-4 3 2 5-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="wpBody"><div class="wpT">Понимаешь деньги</div><div class="wpS">Куда уходят и сколько остаётся</div></div>
       </div>
-
-      <div class="obSlide">
-        <div class="obVisual">
-          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><path d="m16.5 7.5 2-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        </div>
-        <div class="obTitle">Начни свой путь</div>
-        <div class="obSub">Добавь первый финансовый объект</div>
+      <div class="wPoint">
+        <div class="wpIco"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg></div>
+        <div class="wpBody"><div class="wpT">Копишь на мечту</div><div class="wpS">Визуальный прогресс по накоплениям</div></div>
       </div>
-
     </div>
-  </div>
-  <div class="obControls">
-    <div class="obDots" id="obDots">
-      <span class="active"></span><span></span><span></span>
-    </div>
-    <div class="obBtnRow" id="obBtnRow">
-      <button class="obBtn skip" onclick="obFinish()">Пропустить</button>
-      <button class="obBtn primary" id="obNextBtn" onclick="obNext()">Далее</button>
+
+    <div class="wActions">
+      <button class="btn primary block" onclick="welcomeStartTour()">Начать</button>
+      <button class="btn ghost block" onclick="welcomeSkip()">Пропустить</button>
     </div>
   </div>
 </div>
 
 <!-- =========================================================
-     ОСНОВНОЙ APP
+     Tour overlay
+     ========================================================= -->
+<div class="tour" id="tour">
+  <div class="tBackdrop" onclick="tourSkip()"></div>
+  <div class="tSpot" id="tSpot"></div>
+  <div class="tCard" id="tCard">
+    <button class="tClose" onclick="tourSkip()" aria-label="Закрыть">×</button>
+    <div class="tStep" id="tStepLine"></div>
+    <div class="tTitle" id="tTitle"></div>
+    <div class="tText" id="tText"></div>
+    <div class="tActions">
+      <button class="btn ghost" id="tPrevBtn" onclick="tourPrev()">Назад</button>
+      <button class="btn primary" id="tNextBtn" onclick="tourNext()">Далее</button>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================
+     Contextual tip bubble
+     ========================================================= -->
+<div class="tipBubble" id="tipBubble">
+  <div class="tbHead">
+    <div class="tbIco" id="tbIco"></div>
+    <div class="tbBody">
+      <div class="tbT" id="tbT"></div>
+      <div class="tbS" id="tbS"></div>
+    </div>
+  </div>
+  <div class="tbActions">
+    <button onclick="hideTip(false)">Скрыть</button>
+    <button class="primary" onclick="hideTip(true)">Понятно</button>
+  </div>
+</div>
+
+<!-- =========================================================
+     App
      ========================================================= -->
 <div class="app" id="app">
   <header class="top">
@@ -631,9 +651,9 @@ input::placeholder{color:var(--muted);opacity:.7}
   <div class="viewport" id="viewport">
     <div class="track" id="track">
 
-      <!-- ПУТЬ -->
-      <section id="path" class="screen active">
-        <div class="card solid">
+      <!-- ============ ГЛАВНАЯ ============ -->
+      <section id="home" class="screen active">
+        <div class="card solid" data-tour="home-path">
           <div class="eyebrow">Мой финансовый путь</div>
           <div class="h1 num" id="pathDebt">0 ₽</div>
           <div class="label" style="margin-top:8px" id="pathDebtSub">долгов осталось закрыть</div>
@@ -661,7 +681,7 @@ input::placeholder{color:var(--muted);opacity:.7}
         <div class="eyebrow" style="margin:22px 4px 10px">Nula Insights</div>
         <div id="pathInsights"></div>
 
-        <div class="card" style="margin-top:14px">
+        <div class="card" style="margin-top:14px" data-tour="home-status">
           <div class="eyebrow">Мой статус сегодня</div>
           <div class="statusGrid">
             <div class="st"><div class="k">Доход</div><div class="v num pos" id="stIncome">0 ₽</div></div>
@@ -672,10 +692,7 @@ input::placeholder{color:var(--muted);opacity:.7}
           </div>
         </div>
 
-        <div class="eyebrow" style="margin:22px 4px 10px">Цели</div>
-        <div id="pathGoals"></div>
-
-        <div class="eyebrow" style="margin:22px 4px 10px">Быстрые действия</div>
+        <div class="eyebrow" style="margin:22px 4px 10px" data-tour="home-quick">Быстрые действия</div>
         <div class="grid2">
           <button class="btn primary" onclick="openSheet('income')">
             <svg class="actIco" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M12 5l-6 6M12 5l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Доход
@@ -687,7 +704,7 @@ input::placeholder{color:var(--muted);opacity:.7}
             <svg class="actIco" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18" stroke="currentColor" stroke-width="1.8"/><circle cx="16.5" cy="14" r="1.3" fill="currentColor"/></svg>Долг
           </button>
           <button class="btn" onclick="openSheet('goal')">
-            <svg class="actIco" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><path d="m16.5 7.5 2-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Цель
+            <svg class="actIco" viewBox="0 0 24 24" fill="none"><path d="M12 3v18M7 8h7a3 3 0 1 1 0 6H7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Накопление
           </button>
         </div>
 
@@ -695,9 +712,9 @@ input::placeholder{color:var(--muted);opacity:.7}
         <div id="pathUpcoming"></div>
       </section>
 
-      <!-- ДОЛГИ -->
+      <!-- ============ ДОЛГИ ============ -->
       <section id="debts" class="screen">
-        <div class="card solid" style="display:flex;justify-content:space-between;align-items:center;padding:16px 18px">
+        <div class="card solid" style="display:flex;justify-content:space-between;align-items:center;padding:16px 18px" data-tour="debts-head">
           <div>
             <div class="eyebrow" style="margin:0">Активные обязательства</div>
             <div class="h3" id="debtCount" style="margin-top:6px">—</div>
@@ -706,12 +723,12 @@ input::placeholder{color:var(--muted);opacity:.7}
             <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           </button>
         </div>
-        <div id="debtList"></div>
+        <div id="debtList" data-tour="debts-list"></div>
       </section>
 
-      <!-- ДЕНЬГИ -->
+      <!-- ============ ДЕНЬГИ ============ -->
       <section id="money" class="screen">
-        <div class="card">
+        <div class="card" data-tour="money-period">
           <div class="eyebrow">Период</div>
           <div class="seg" id="moneyPeriodSeg">
             <button data-p="day" onclick="setMoneyPeriod('day')">День</button>
@@ -725,7 +742,7 @@ input::placeholder{color:var(--muted);opacity:.7}
           </div>
         </div>
 
-        <div class="grid3">
+        <div class="grid3" data-tour="money-summary">
           <div class="metric"><div class="label">Доходы</div><div class="v num pos" id="moneyIncome">0 ₽</div></div>
           <div class="metric"><div class="label">Расходы</div><div class="v num neg" id="moneyExpense">0 ₽</div></div>
           <div class="metric"><div class="label">Долги</div><div class="v num" id="moneyPaid">0 ₽</div></div>
@@ -749,9 +766,9 @@ input::placeholder{color:var(--muted);opacity:.7}
         <div id="moneyList"></div>
       </section>
 
-      <!-- АНАЛИТИКА -->
+      <!-- ============ АНАЛИТИКА ============ -->
       <section id="analytics" class="screen">
-        <div class="card" style="padding:16px">
+        <div class="card" style="padding:16px" data-tour="an-period">
           <div class="eyebrow">Период</div>
           <div class="seg" id="anPeriodSeg">
             <button data-p="week" onclick="setAnPeriod('week')">Неделя</button>
@@ -765,20 +782,20 @@ input::placeholder{color:var(--muted);opacity:.7}
           </div>
         </div>
 
-        <div class="card" style="padding:16px">
+        <div class="card" style="padding:16px" data-tour="an-cat">
           <div class="eyebrow">Показатель</div>
           <div class="seg" id="anCatSeg">
             <button data-c="expense" onclick="setAnCat('expense')">Расходы</button>
             <button data-c="income" onclick="setAnCat('income')">Доходы</button>
             <button data-c="debt" onclick="setAnCat('debt')">Долги</button>
-            <button data-c="goal" onclick="setAnCat('goal')">Цели</button>
+            <button data-c="goal" onclick="setAnCat('goal')">Накопления</button>
           </div>
         </div>
 
         <div class="eyebrow" style="margin:22px 4px 10px">Nula Insights</div>
-        <div id="anInsights"></div>
+        <div id="anInsights" data-tour="an-insights"></div>
 
-        <div class="card" style="margin-top:6px">
+        <div class="card" style="margin-top:6px" data-tour="an-chart">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
             <div class="eyebrow" style="margin:0" id="anLabelTop">—</div>
             <div class="chartType" id="anChartType">
@@ -798,15 +815,27 @@ input::placeholder{color:var(--muted);opacity:.7}
           <div class="legend" id="anLegend"></div>
         </div>
 
-        <div class="card" style="margin-top:12px">
-          <div class="eyebrow">Сценарий закрытия</div>
+        <div class="card" style="margin-top:12px" data-tour="an-scenario">
+          <div class="eyebrow">Сценарий закрытия долгов</div>
           <div id="scenarioBody"></div>
         </div>
       </section>
 
-      <!-- ЕЩЁ -->
+      <!-- ============ НАКОПЛЕНИЯ ============ -->
+      <section id="goals" class="screen">
+        <div class="card solid goalsSummary" id="goalsSummaryCard" data-tour="goals-summary"></div>
+        <div class="eyebrow" id="goalsActiveLabel" style="margin:22px 4px 10px;display:none">Активные накопления</div>
+        <div id="goalsActiveList" data-tour="goals-active"></div>
+        <div class="eyebrow" id="goalsDoneLabel" style="margin:22px 4px 10px;display:none">Достигнуто</div>
+        <div id="goalsDoneList"></div>
+        <button class="btn primary block" id="addGoalBtn" style="margin-top:12px" onclick="openSheet('goal')">
+          <svg class="actIco" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Добавить накопление
+        </button>
+      </section>
+
+      <!-- ============ ЕЩЁ ============ -->
       <section id="more" class="screen">
-        <div class="card">
+        <div class="card" data-tour="more-tools">
           <div class="eyebrow">Инструменты</div>
           <button class="btn block" style="margin-bottom:8px" onclick="openSheet('tools')">
             <svg class="actIco" viewBox="0 0 24 24" fill="none"><path d="M4 20h16M6 20V10M10 20V4M14 20v-6M18 20V8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Калькуляторы
@@ -816,10 +845,19 @@ input::placeholder{color:var(--muted);opacity:.7}
           </button>
         </div>
 
+        <div class="card" data-tour="more-help">
+          <div class="eyebrow">Обучение</div>
+          <div class="label" style="margin-bottom:12px;line-height:1.5;font-weight:400">
+            Хочешь пройти тур по приложению ещё раз или узнать что-то новое?
+          </div>
+          <button class="btn block" style="margin-bottom:8px" onclick="restartTour()">🎓 Пройти тур заново</button>
+          <button class="btn block" onclick="restartWelcome()">👋 Показать приветствие</button>
+        </div>
+
         <div class="card">
           <div class="eyebrow">Уведомления</div>
           <div class="label" style="margin-bottom:12px;line-height:1.5;font-weight:400">
-            Напоминания о платежах и достижениях приходят через Telegram-бота. Готово к подключению — включи, чтобы активировать.
+            Напоминания о платежах и достижениях приходят через Telegram-бота.
           </div>
           <button class="btn block" id="notifyBtn" onclick="toggleNotify()">Включить напоминания</button>
         </div>
@@ -828,7 +866,7 @@ input::placeholder{color:var(--muted);opacity:.7}
           <div class="eyebrow">Данные</div>
           <button class="btn block" style="margin-bottom:8px" onclick="exportData()">Экспорт JSON</button>
           <button class="btn block" style="margin-bottom:8px" onclick="importData()">Импорт JSON</button>
-          <button class="btn block danger" onclick="resetAll()">Сбросить всё</button>
+          <button class="btn block danger" onclick="askResetAll()">Сбросить всё</button>
         </div>
 
         <div class="card">
@@ -842,7 +880,7 @@ input::placeholder{color:var(--muted);opacity:.7}
           <div class="label" style="margin-top:8px;line-height:1.55;font-weight:400">
             Персональный финансовый навигатор.<br>
             Помогает выйти из долгов и идти к своим целям.<br><br>
-            <span style="color:var(--muted)">Версия 2.1 · Nula</span>
+            <span style="color:var(--muted)">Версия 2.5 · Nula</span>
           </div>
         </div>
       </section>
@@ -851,23 +889,36 @@ input::placeholder{color:var(--muted);opacity:.7}
   </div>
 
   <nav class="nav" id="navEl">
-    <button class="active" data-idx="0">
+    <button class="active" data-idx="0" data-tour="nav-0">
       <svg class="navIcon" viewBox="0 0 24 24" fill="none"><path d="M4 19h16M6 19V9l6-4 6 4v10M10 19v-5h4v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <small>Путь</small>
+      <small>Главная</small>
     </button>
-    <button data-idx="1">
+    <button data-idx="1" data-tour="nav-1">
       <svg class="navIcon" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18" stroke="currentColor" stroke-width="1.8"/><circle cx="16.5" cy="14" r="1.3" fill="currentColor"/></svg>
       <small>Долги</small>
     </button>
-    <button data-idx="2">
-      <svg class="navIcon" viewBox="0 0 24 24" fill="none"><path d="M5 18V6m0 12 4-4m-4 4 4 4M19 6v12m0-12-4 4m4-4-4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <button data-idx="2" data-tour="nav-2">
+      <svg class="navIcon" viewBox="0 0 24 24" fill="none">
+        <path d="M3 8a2.5 2.5 0 0 1 2.5-2.5H18A1.5 1.5 0 0 0 19.5 4V3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="3" y="6.5" width="18" height="14" rx="3" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M3 11h18" stroke="currentColor" stroke-width="1.8"/>
+        <circle cx="17" cy="15.5" r="1.4" fill="currentColor"/>
+      </svg>
       <small>Деньги</small>
     </button>
-    <button data-idx="3">
+    <button data-idx="3" data-tour="nav-3">
       <svg class="navIcon" viewBox="0 0 24 24" fill="none"><path d="M4 19V5m0 14h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="m7 15 3-4 3 2 5-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <small>Аналитика</small>
     </button>
-    <button data-idx="4">
+    <button data-idx="4" data-tour="nav-4">
+      <svg class="navIcon" viewBox="0 0 24 24" fill="none">
+        <path d="M4 19h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M7 19v-6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v6" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        <path d="M12 11V4M9 7l3-3 3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <small>Накопления</small>
+    </button>
+    <button data-idx="5" data-tour="nav-5">
       <svg class="navIcon" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M12 3v3M12 18v3M21 12h-3M6 12H3M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1M18.4 18.4l-2.1-2.1M7.7 7.7 5.6 5.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
       <small>Ещё</small>
     </button>
@@ -880,14 +931,33 @@ input::placeholder{color:var(--muted);opacity:.7}
     <div id="sheetContent"></div>
   </div>
 </div>
+
+<div class="confirmSheet" id="confirmSheet">
+  <div class="backdrop" onclick="closeConfirm()"></div>
+  <div class="confirmCard">
+    <div class="confirmIco">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 3 2 20h20L12 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 10v4M12 17h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </div>
+    <div class="confirmTitle" id="confirmTitle">Удалить?</div>
+    <div class="confirmText" id="confirmText">Это действие нельзя отменить.</div>
+    <div class="confirmTarget" id="confirmTarget"></div>
+    <div class="confirmHint" id="confirmHint"></div>
+    <div class="confirmActions">
+      <button class="btn" onclick="closeConfirm()">Отмена</button>
+      <button class="btn danger" id="confirmOkBtn" onclick="runConfirm()">Удалить</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
 /* =========================================================
-   NULA v2.1
+   NULA v2.5 — Onboarding + Tour + Contextual tips
    ========================================================= */
 const KEY='fingramate_data';
 const LEGACY=['nula_data','fingramate_v7','fingramate_v6','fingramate_v5','fingramate_v4','fingramate_v3','fingramate_v2','fingramate_v1'];
+const VALID_THEMES=['dark','light','berry','berry-light','ice','ice-light'];
 
 const CATEGORIES=[
   {key:'Еда',ico:'🍔'},{key:'Жильё',ico:'🏠'},{key:'Транспорт',ico:'🚗'},
@@ -913,15 +983,19 @@ const catIcon=c=>(CATEGORIES.find(x=>x.key===c)||CATEGORIES[6]).ico;
 })();
 
 function normalize(p){
+  let theme = typeof p.theme==='string'?p.theme:'dark';
+  if(!VALID_THEMES.includes(theme)) theme='dark';
   return {
     debts:Array.isArray(p.debts)?p.debts:[],
     income:Array.isArray(p.income)?p.income:[],
     expenses:Array.isArray(p.expenses)?p.expenses:[],
     history:Array.isArray(p.history)?p.history:[],
     goals:Array.isArray(p.goals)?p.goals:[],
-    theme:typeof p.theme==='string'?p.theme:'dark',
+    theme:theme,
     notify:!!p.notify,
-    onboarded:!!p.onboarded
+    onboarded:!!p.onboarded,
+    tourDone:!!p.tourDone,
+    tipsSeen: (p.tipsSeen && typeof p.tipsSeen==='object') ? p.tipsSeen : {}
   };
 }
 
@@ -940,6 +1014,7 @@ const monthKey=d=>{const x=new Date(d);return x.getFullYear()+'-'+pad(x.getMonth
 const MONTHS_SHORT=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
 const WD_SHORT=['пн','вт','ср','чт','пт','сб','вс'];
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){}render();};
+const saveQuiet=()=>{try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){}};
 const esc=s=>String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 
 function toast(t){const e=document.getElementById('toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2200);}
@@ -958,79 +1033,375 @@ function applyTheme(){
   if(t==='dark') document.documentElement.removeAttribute('data-theme');
   else document.documentElement.dataset.theme=t;
   const meta=document.querySelector('meta[name="theme-color"]');
-  if(meta) meta.setAttribute('content', t==='light'?'#F4F4F5':'#09090B');
+  let color='#09090B';
+  if(t==='light') color='#F4F4F5';
+  else if(t==='berry-light') color='#FDF2F5';
+  else if(t==='ice-light') color='#EFF7FA';
+  if(meta) meta.setAttribute('content', color);
 }
-function setTheme(t){ data.theme=t; save(); applyTheme(); haptic('select'); openSheet('settings'); }
+function setTheme(t){
+  if(!VALID_THEMES.includes(t)) t='dark';
+  data.theme=t; save(); applyTheme(); haptic('select'); openSheet('settings');
+}
 
 function toggleNotify(){
-  data.notify=!data.notify;
-  save();
+  data.notify=!data.notify; save();
   const btn=document.getElementById('notifyBtn');
   if(btn) btn.textContent=data.notify?'Выключить напоминания':'Включить напоминания';
   toast(data.notify?'Напоминания включены':'Напоминания выключены');
   haptic('select');
 }
-function notify(title, message){
+function notify(title,message){
   if(!data.notify) return;
   try{ if(tg && tg.showAlert) tg.showAlert(message); }catch(e){}
   console.log('[Nula notify]',title,message);
 }
 
-/* === ОНБОРДИНГ === */
-let obIndex=0;
-let obDragX=0,obStartX=0,obDrag=false;
-function obSetIndex(i){
-  obIndex=Math.max(0,Math.min(2,i));
-  const track=document.getElementById('obTrack');
-  track.style.transform=`translateX(-${obIndex*33.3333}%)`;
-  document.querySelectorAll('#obDots span').forEach((d,idx)=>d.classList.toggle('active',idx===obIndex));
-  const btn=document.getElementById('obNextBtn');
-  if(btn) btn.textContent = obIndex===2 ? 'Начать' : 'Далее';
+let confirmAction=null;
+function openConfirm({title,text,target,hint,okText,onOk}){
+  document.getElementById('confirmTitle').textContent=title||'Подтвердить?';
+  document.getElementById('confirmText').textContent=text||'Это действие нельзя отменить.';
+  const targetEl=document.getElementById('confirmTarget');
+  if(target){ targetEl.textContent=target; targetEl.style.display=''; } else { targetEl.textContent=''; targetEl.style.display='none'; }
+  const hintEl=document.getElementById('confirmHint');
+  if(hint){ hintEl.textContent=hint; hintEl.style.display=''; } else { hintEl.textContent=''; hintEl.style.display='none'; }
+  document.getElementById('confirmOkBtn').textContent=okText||'Удалить';
+  confirmAction=onOk||null;
+  document.getElementById('confirmSheet').classList.add('open');
+  haptic('light');
+}
+function closeConfirm(){
+  document.getElementById('confirmSheet').classList.remove('open');
+  confirmAction=null;
+}
+function runConfirm(){
+  if(typeof confirmAction==='function') confirmAction();
+  closeConfirm();
+}
+
+/* =========================================================
+   WELCOME — приветственный экран
+   ========================================================= */
+function showWelcome(){
+  const w=document.getElementById('welcome');
+  w.classList.add('show');
+  w.classList.remove('hide');
+}
+function welcomeSkip(){
+  data.onboarded=true;
+  data.tourDone=true;
+  saveQuiet();
+  const w=document.getElementById('welcome');
+  w.classList.add('hide');
+  setTimeout(()=>{ w.classList.remove('show','hide'); },450);
   haptic('select');
 }
-function obNext(){
-  if(obIndex<2) obSetIndex(obIndex+1);
-  else obFinish();
-}
-function obFinish(){
+function welcomeStartTour(){
   data.onboarded=true;
-  try{ localStorage.setItem(KEY,JSON.stringify(data)); }catch(e){}
-  const el=document.getElementById('onboarding');
-  el.classList.add('hide');
-  setTimeout(()=>el.classList.remove('show','hide'), 420);
+  saveQuiet();
+  const w=document.getElementById('welcome');
+  w.classList.add('hide');
+  setTimeout(()=>{
+    w.classList.remove('show','hide');
+    startTour();
+  },420);
   haptic('success');
 }
-(function bindObSwipe(){
-  const vp=document.getElementById('obViewport');
-  if(!vp) return;
-  vp.addEventListener('touchstart',e=>{
-    if(e.touches.length!==1) return;
-    obStartX=e.touches[0].clientX;
-    obDragX=0; obDrag=true;
-  },{passive:true});
-  vp.addEventListener('touchmove',e=>{
-    if(!obDrag) return;
-    obDragX=e.touches[0].clientX-obStartX;
-  },{passive:true});
-  vp.addEventListener('touchend',()=>{
-    if(!obDrag) return;
-    obDrag=false;
-    const th=60;
-    if(obDragX<-th && obIndex<2) obSetIndex(obIndex+1);
-    else if(obDragX>th && obIndex>0) obSetIndex(obIndex-1);
-    obDragX=0;
-  },{passive:true});
-})();
 
-/* === ОСНОВНОЕ === */
-const screens=['path','debts','money','analytics','more'];
+/* =========================================================
+   TOUR — интерактивный тур
+   ========================================================= */
+const TOUR_STEPS=[
+  {
+    id:'nav-0',
+    title:'Главная',
+    text:'Здесь ты видишь свой финансовый путь целиком: сколько осталось закрыть по долгам, прогресс и прогноз свободы.',
+    tab:0
+  },
+  {
+    id:'home-path',
+    title:'Финансовый путь',
+    text:'Главная цифра — остаток долгов. Ниже — прогресс, сколько было и сколько уже закрыто. Это твой главный ориентир.',
+    tab:0
+  },
+  {
+    id:'home-status',
+    title:'Твой статус',
+    text:'Сколько заработал, потратил и направил на долги за месяц. Темп погашения показывает, с какой скоростью ты идёшь к нулю.',
+    tab:0
+  },
+  {
+    id:'nav-1',
+    title:'Долги',
+    text:'Собери все обязательства в одном месте — кредитки, рассрочки, долги друзьям. Один экран, полная картина.',
+    tab:1
+  },
+  {
+    id:'debts-head',
+    title:'Карточки долгов',
+    text:'Каждое обязательство — отдельная карточка. Видно остаток, прогресс и дату следующего платежа.',
+    tab:1
+  },
+  {
+    id:'debts-list',
+    title:'Платежи',
+    text:'Отмечай каждый платёж — приложение покажет, сколько ты уже закрыл и сколько осталось.',
+    tab:1
+  },
+  {
+    id:'nav-2',
+    title:'Деньги',
+    text:'Здесь живут все доходы и расходы. Каждый день, каждую копейку — в одном месте.',
+    tab:2
+  },
+  {
+    id:'money-summary',
+    title:'Доходы и расходы',
+    text:'Сверху — сводка за период. Внизу — список всех операций по дням. Видно, куда уходят деньги.',
+    tab:2
+  },
+  {
+    id:'nav-3',
+    title:'Аналитика',
+    text:'Не просто цифры. Здесь ты понимаешь, как ты тратишь, куда уходит больше всего и что меняется месяц к месяцу.',
+    tab:3
+  },
+  {
+    id:'an-insights',
+    title:'Nula Insights',
+    text:'Приложение само замечает важное: закрыл X% долга, снизил расходы, средний платёж. Наблюдения — как личный аналитик.',
+    tab:3
+  },
+  {
+    id:'an-chart',
+    title:'Графики',
+    text:'Круговая диаграмма показывает, на что уходят деньги. Столбики — динамику по дням, неделям или месяцам.',
+    tab:3
+  },
+  {
+    id:'nav-4',
+    title:'Накопления',
+    text:'Отдельный раздел для мечт и целей: подушка, отпуск, машина. Накопления растут на глазах.',
+    tab:4
+  },
+  {
+    id:'goals-summary',
+    title:'Общий прогресс',
+    text:'Здесь видно, сколько всего накоплено, средний темп и когда все накопления будут готовы.',
+    tab:4
+  },
+  {
+    id:'goals-active',
+    title:'Твои накопления',
+    text:'У каждого накопления свой прогресс и свой прогноз. Пополняй — и видишь, как растёт.',
+    tab:4
+  },
+  {
+    id:'nav-5',
+    title:'Ещё',
+    text:'Инструменты, настройки, экспорт данных. Здесь же — калькуляторы для кредитов и накоплений.',
+    tab:5
+  },
+  {
+    id:'more-tools',
+    title:'Инструменты',
+    text:'Калькуляторы: кредит, накопления, срок погашения. Просто вводишь цифры — видишь результат.',
+    tab:5
+  },
+  {
+    id:'more-help',
+    title:'Обучение',
+    text:'Можно в любой момент перезапустить тур или показать это приветствие снова. Если что-то забыл — не страшно.',
+    tab:5
+  }
+];
+
+let tourIndex=0;
+let tourSpotTarget=null;
+
+function startTour(){
+  tourIndex=0;
+  document.getElementById('tour').classList.add('show');
+  tourStepRender();
+  haptic('success');
+}
+function tourStepRender(){
+  const step=TOUR_STEPS[tourIndex];
+  if(!step){ tourFinish(); return; }
+
+  // Переключаем вкладку
+  if(typeof step.tab==='number' && step.tab!==curScreen){
+    setScreen(step.tab,{haptic:false});
+  }
+
+  // Небольшая задержка — даём экрану отрисоваться и проскроллить вверх
+  setTimeout(()=>{
+    const target=document.querySelector(`[data-tour="${step.id}"]`);
+    const spot=document.getElementById('tSpot');
+    const card=document.getElementById('tCard');
+
+    if(target){
+      // Скроллим так, чтобы элемент был виден
+      try{
+        target.scrollIntoView({block:'center',behavior:'smooth'});
+      }catch(e){}
+
+      setTimeout(()=>{
+        const r=target.getBoundingClientRect();
+        const pad=8;
+        const top=Math.max(8, r.top-pad);
+        const left=Math.max(8, r.left-pad);
+        const width=Math.min(window.innerWidth-left-8, r.width+pad*2);
+        const height=Math.min(window.innerHeight-top-8, r.height+pad*2);
+
+        spot.style.top=top+'px';
+        spot.style.left=left+'px';
+        spot.style.width=width+'px';
+        spot.style.height=height+'px';
+        spot.style.opacity='1';
+
+        // Позиция карточки: если элемент в верхней половине — карточка снизу.
+        const bottom=top+height;
+        const spaceBelow=window.innerHeight-bottom;
+        if(spaceBelow<260 && top>260){
+          card.classList.remove('atBottom');
+          card.classList.add('atTop');
+        } else {
+          card.classList.remove('atTop');
+          card.classList.add('atBottom');
+        }
+
+        tourRenderContent(step);
+      },320);
+    } else {
+      // Нет элемента — просто центр
+      spot.style.opacity='0';
+      card.classList.remove('atTop');
+      card.classList.add('atBottom');
+      tourRenderContent(step);
+    }
+  },120);
+}
+function tourRenderContent(step){
+  const total=TOUR_STEPS.length;
+  const bars=Array.from({length:Math.min(total,10)},(_,i)=> {
+    const stepIdx=Math.floor(i*(total/Math.min(total,10)));
+    return `<i class="${stepIdx<=tourIndex?'on':''}"></i>`;
+  }).join('');
+  document.getElementById('tStepLine').innerHTML=`<span class="tBar">${bars}</span><span>${tourIndex+1} / ${total}</span>`;
+  document.getElementById('tTitle').textContent=step.title;
+  document.getElementById('tText').textContent=step.text;
+  const prev=document.getElementById('tPrevBtn');
+  const next=document.getElementById('tNextBtn');
+  if(prev) prev.style.display = tourIndex>0 ? '' : 'none';
+  if(next) next.textContent = tourIndex>=total-1 ? 'Готово' : 'Далее';
+}
+function tourNext(){
+  if(tourIndex>=TOUR_STEPS.length-1){ tourFinish(); return; }
+  tourIndex++;
+  haptic('select');
+  tourStepRender();
+}
+function tourPrev(){
+  if(tourIndex<=0) return;
+  tourIndex--;
+  haptic('select');
+  tourStepRender();
+}
+function tourSkip(){
+  tourFinish();
+}
+function tourFinish(){
+  data.tourDone=true;
+  data.onboarded=true;
+  saveQuiet();
+  const el=document.getElementById('tour');
+  el.classList.remove('show');
+  haptic('success');
+  // Вернёмся на Главную
+  setScreen(0,{force:true,haptic:false});
+  setTimeout(()=>{
+    toast('Тур завершён — теперь ты знаешь, как это работает');
+  },300);
+}
+function restartTour(){
+  closeSheet();
+  data.tourDone=false;
+  saveQuiet();
+  setTimeout(()=>startTour(),200);
+}
+function restartWelcome(){
+  closeSheet();
+  data.onboarded=false;
+  data.tourDone=false;
+  saveQuiet();
+  showWelcome();
+}
+
+/* =========================================================
+   CONTEXTUAL TIPS — короткие подсказки
+   ========================================================= */
+const TIPS={
+  debts:{
+    ico:`<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="3" stroke="currentColor" stroke-width="2"/><path d="M3 10h18" stroke="currentColor" stroke-width="2"/></svg>`,
+    title:'Все долги — в одном месте',
+    text:'Добавь кредитки, рассрочки и долги друзьям. Чем полнее картина, тем точнее прогноз закрытия.'
+  },
+  analytics:{
+    ico:`<svg viewBox="0 0 24 24" fill="none"><path d="M4 19V5m0 14h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="m7 15 3-4 3 2 5-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+    title:'Пойми свои привычки',
+    text:'Раздел показывает, куда уходят деньги и что меняется месяц к месяцу. Здесь же — сценарий закрытия долгов.'
+  },
+  goals:{
+    ico:`<svg viewBox="0 0 24 24" fill="none"><path d="M12 3v18M7 8h7a3 3 0 1 1 0 6H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+    title:'Копи на мечту',
+    text:'Создай накопление — подушку, отпуск, машину. Визуальный прогресс помогает не бросить.'
+  },
+  money:{
+    ico:`<svg viewBox="0 0 24 24" fill="none"><path d="M5 18V6m0 12 4-4m-4 4 4 4M19 6v12m0-12-4 4m4-4-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+    title:'Деньги под контролем',
+    text:'Записывай доходы и расходы — здесь видно, сколько остаётся свободным.'
+  }
+};
+let tipTimer=null;
+let currentTip=null;
+function showTip(key){
+  if(data.tipsSeen && data.tipsSeen[key]) return;
+  const t=TIPS[key]; if(!t) return;
+  const b=document.getElementById('tipBubble');
+  document.getElementById('tbIco').innerHTML=t.ico;
+  document.getElementById('tbT').textContent=t.title;
+  document.getElementById('tbS').textContent=t.text;
+  b.classList.add('show');
+  currentTip=key;
+  if(tipTimer) clearTimeout(tipTimer);
+  tipTimer=setTimeout(()=>hideTip(false),6500);
+}
+function hideTip(markSeen){
+  const b=document.getElementById('tipBubble');
+  b.classList.remove('show');
+  if(markSeen && currentTip){
+    data.tipsSeen=Object.assign({},data.tipsSeen||{});
+    data.tipsSeen[currentTip]=true;
+    saveQuiet();
+  }
+  if(tipTimer){clearTimeout(tipTimer);tipTimer=null;}
+  currentTip=null;
+}
+
+/* =========================================================
+   ОБЩИЕ ФУНКЦИИ
+   ========================================================= */
+let obDragX=0,obStartX=0,obDrag=false;
+
+/* Навигация */
+const screens=['home','debts','money','analytics','goals','more'];
 let curScreen=0;
 function setScreen(idx,opts={}){
-  idx=Math.max(0,Math.min(4,idx));
+  idx=Math.max(0,Math.min(5,idx));
   if(idx===curScreen && !opts.force){ render(); return; }
   curScreen=idx;
-  const track=document.getElementById('track');
-  track.style.transform=`translateX(-${idx*20}%)`;
+  document.getElementById('track').style.transform=`translateX(-${idx*(100/6)}%)`;
   document.querySelectorAll('.screen').forEach((s,i)=>{
     s.classList.toggle('active',i===idx);
     if(i===idx) s.scrollTop=0;
@@ -1038,15 +1409,25 @@ function setScreen(idx,opts={}){
   document.querySelectorAll('#navEl button').forEach((b,i)=>b.classList.toggle('active',i===idx));
   if(opts.haptic!==false) haptic('select');
   render();
+  // контекстные подсказки — только вне тура
+  if(!document.getElementById('tour').classList.contains('show')){
+    if(idx===1) setTimeout(()=>showTip('debts'),700);
+    if(idx===2) setTimeout(()=>showTip('money'),700);
+    if(idx===3) setTimeout(()=>showTip('analytics'),700);
+    if(idx===4) setTimeout(()=>showTip('goals'),700);
+  }
 }
 document.querySelectorAll('#navEl button').forEach(btn=>btn.addEventListener('click',()=>setScreen(+btn.dataset.idx)));
 
 (function(){
   const vp=document.getElementById('viewport'), tr=document.getElementById('track');
+  const STEP = 100/6;
   let sx=0,sy=0,dx=0,drag=false,lock=null,t0=0;
   vp.addEventListener('touchstart',e=>{
     if(e.touches.length!==1) return;
     if(e.target.closest('[data-no-swipe]')){ drag=false; lock='blocked'; return; }
+    // Отключаем свайп во время тура
+    if(document.getElementById('tour').classList.contains('show')) return;
     sx=e.touches[0].clientX; sy=e.touches[0].clientY;
     dx=0; drag=true; lock=null; t0=Date.now();
   },{passive:true});
@@ -1061,8 +1442,8 @@ document.querySelectorAll('#navEl button').forEach(btn=>btn.addEventListener('cl
       }
     }
     if(lock!=='h') return;
-    let off=-curScreen*vp.clientWidth + dX;
-    const min=-4*vp.clientWidth;
+    let off=-curScreen*(vp.clientWidth*STEP/100) + dX;
+    const min=-5*(vp.clientWidth*STEP/100);
     if(off>0) off*=0.35;
     if(off<min) off=min+(off-min)*0.35;
     tr.style.transform=`translateX(${off}px)`;
@@ -1078,16 +1459,17 @@ document.querySelectorAll('#navEl button').forEach(btn=>btn.addEventListener('cl
       if(dx<-th || (v>0.5 && dx<-40)) target=curScreen+1;
       else if(dx>th || (v>0.5 && dx>40)) target=curScreen-1;
       setScreen(target);
-    } else { tr.style.transform=`translateX(-${curScreen*20}%)`; }
+    } else { tr.style.transform=`translateX(-${curScreen*STEP}%)`; }
     lock=null; dx=0;
   },{passive:true});
   window.addEventListener('resize',()=>{
     tr.style.transition='none';
-    tr.style.transform=`translateX(-${curScreen*20}%)`;
+    tr.style.transform=`translateX(-${curScreen*STEP}%)`;
     requestAnimationFrame(()=>tr.style.transition='');
   });
 })();
 
+/* Sheet */
 (function(){
   const sh=document.getElementById('sheet'), md=sh.querySelector('.modal');
   let sy=0,dy=0,drag=false;
@@ -1095,19 +1477,21 @@ document.querySelectorAll('#navEl button').forEach(btn=>btn.addEventListener('cl
   md.addEventListener('touchmove',e=>{ if(!drag)return; dy=e.touches[0].clientY-sy; if(dy>0){ md.style.transform=`translateY(${dy}px)`; sh.classList.add('dragging'); e.preventDefault(); } },{passive:false});
   md.addEventListener('touchend',()=>{ if(!drag)return; drag=false; sh.classList.remove('dragging'); if(dy>90){closeSheet();haptic('light');} else md.style.transform=''; dy=0; },{passive:true});
 })();
-
 function openSheet(type,id){
   let c='';
   if(type==='income') c=formIncome();
   else if(type==='expense') c=formExpense();
   else if(type==='debt') c=formDebt();
+  else if(type==='debtEdit') c=formDebtEdit(id);
   else if(type==='pay') c=formPay(id);
   else if(type==='goal') c=formGoal();
+  else if(type==='goalEdit') c=formGoalEdit(id);
   else if(type==='goalpay') c=formGoalPay(id);
   else if(type==='calculator') c=calcBasic();
   else if(type==='tools') c=toolsSheet();
   else if(type==='settings') c=settingsSheet();
   else if(type==='history') c=debtHistory(id);
+  else if(type==='debtMenu') c=debtMenu(id);
   document.getElementById('sheetContent').innerHTML=c;
   document.getElementById('sheet').classList.add('open');
   if(type==='calculator') bindCalcBasic();
@@ -1118,6 +1502,12 @@ function closeSheet(){
   if(md) md.style.transform='';
   document.getElementById('sheet').classList.remove('open');
 }
+
+const ICO_PENCIL = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 20h4l10-10a2.83 2.83 0 0 0-4-4L4 16v4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="m13 7 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`;
+const ICO_MORE = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="6" cy="12" r="1.7" fill="currentColor"/><circle cx="12" cy="12" r="1.7" fill="currentColor"/><circle cx="18" cy="12" r="1.7" fill="currentColor"/></svg>`;
+const ICO_PLUS = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+const ICO_TRASH = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const ICO_CLOCK = `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4l2.5 1.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`;
 
 function formIncome(){
   return `<h2>Добавить доход</h2>
@@ -1145,6 +1535,24 @@ function formDebt(){
     <label>Дата следующего платежа</label><input id="d_due" type="date">
     <button class="btn primary block" onclick="addDebt()">Добавить</button>`;
 }
+function formDebtEdit(id){
+  const d=data.debts[id];
+  return `<h2>Изменить долг</h2>
+    <label>Название</label><input id="d_name" value="${esc(d.name)}">
+    <label>Кому</label><input id="d_who" value="${esc(d.who||'')}">
+    <label>Общая сумма</label><input id="d_amount" type="number" value="${d.total}" inputmode="decimal">
+    <label>Ставка, % годовых</label><input id="d_rate" type="number" value="${d.rate||0}" inputmode="decimal">
+    <label>Минимальный платёж</label><input id="d_min" type="number" value="${d.min||0}" inputmode="decimal">
+    <label>Дата следующего платежа</label><input id="d_due" type="date" value="${d.due||''}">
+    <div class="label" style="margin-top:8px;line-height:1.45">
+      Уже погашено: <b style="color:var(--accent)">${fmt(d.paid)}</b><br>
+      Если уменьшить общую сумму ниже этой отметки, долг закроется.
+    </div>
+    <div class="grid2" style="margin-top:14px">
+      <button class="btn" onclick="closeSheet()">Отмена</button>
+      <button class="btn primary" onclick="saveDebtEdit(${id})">Сохранить</button>
+    </div>`;
+}
 function formPay(id){
   const d=data.debts[id];
   return `<h2>Платёж</h2>
@@ -1155,31 +1563,99 @@ function formPay(id){
     <button class="btn primary block" onclick="payDebt(${id})">Засчитать</button>`;
 }
 function formGoal(){
-  return `<h2>Новая цель</h2>
+  return `<h2>Новое накопление</h2>
     <label>Название</label><input id="g_name" placeholder="Подушка, мотоцикл…">
-    <label>Сумма цели</label><input id="g_total" type="number" placeholder="100000" inputmode="decimal">
+    <label>Сумма накопления</label><input id="g_total" type="number" placeholder="100000" inputmode="decimal">
     <button class="btn primary block" onclick="addGoal()">Создать</button>`;
+}
+function formGoalEdit(id){
+  const g=data.goals[id];
+  return `<h2>Изменить накопление</h2>
+    <label>Название</label><input id="g_name" value="${esc(g.name)}">
+    <label>Сумма накопления</label><input id="g_total" type="number" value="${g.total}" inputmode="decimal">
+    <div class="label" style="margin-top:8px;line-height:1.45">
+      Уже накоплено: <b style="color:var(--accent)">${fmt(g.saved)}</b><br>
+      Если уменьшить сумму ниже этой отметки, оно считается достигнутым.
+    </div>
+    <div class="grid2" style="margin-top:14px">
+      <button class="btn" onclick="closeSheet()">Отмена</button>
+      <button class="btn primary" onclick="saveGoalEdit(${id})">Сохранить</button>
+    </div>`;
 }
 function formGoalPay(id){
   const g=data.goals[id];
-  return `<h2>Пополнить цель</h2>
+  return `<h2>Пополнить накопление</h2>
     <div class="label">${esc(g.name)}</div>
     <div class="num" style="font-size:26px;font-weight:700;letter-spacing:-.05em;margin:6px 0 14px">${fmt(g.saved)} / ${fmt(g.total)}</div>
     <label>Сумма</label><input id="gp_amount" type="number" placeholder="5000" inputmode="decimal">
     <label>Дата</label><input id="gp_date" type="date" value="${dateKey(now())}">
     <button class="btn primary block" onclick="payGoal(${id})">Пополнить</button>`;
 }
+function debtMenu(id){
+  const d=data.debts[id];
+  return `<h2>${esc(d.name)}</h2>
+    <button class="btn block" style="margin-bottom:8px;justify-content:flex-start" onclick="closeSheet();openSheet('history',${id})">🕘 История платежей</button>
+    <button class="btn block" style="margin-bottom:8px;justify-content:flex-start" onclick="closeSheet();openSheet('debtEdit',${id})">${ICO_PENCIL} Изменить долг</button>
+    <button class="btn block danger" style="justify-content:flex-start" onclick="closeSheet();askDeleteDebt(${id})">${ICO_TRASH} Удалить долг</button>`;
+}
 function settingsSheet(){
-  const themes=[['dark','Nula Dark'],['berry','Nula Berry'],['ice','Nula Ice'],['light','Nula Light']];
+  const isBerryDark = data.theme==='berry';
+  const isBerryLight = data.theme==='berry-light';
+  const isIceDark = data.theme==='ice';
+  const isIceLight = data.theme==='ice-light';
+  const isDark = data.theme==='dark';
+  const isLight = data.theme==='light';
+
   return `<h2>Внешний вид</h2>
-    <div class="seg" style="margin-bottom:18px;flex-direction:column;gap:6px;background:none;border:none;padding:0">
-      ${themes.map(t=>`<button class="${(data.theme||'dark')===t[0]?'sel':''}" style="width:100%;padding:14px" onclick="setTheme('${t[0]}')">${t[1]}</button>`).join('')}
+
+    <div class="themeSection">
+      <div class="themeSectionLabel">Основные</div>
+      <div class="themeSingle">
+        <div class="opt ${isDark?'sel':''}" onclick="setTheme('dark')">
+          <div class="optPreview pDark"><svg viewBox="0 0 24 24" fill="none"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+          <div class="optLabel">Nula Dark</div>
+        </div>
+        <div class="opt ${isLight?'sel':''}" onclick="setTheme('light')">
+          <div class="optPreview pLight"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 3v2M12 19v2M21 12h-2M5 12H3M17.7 6.3l-1.4 1.4M7.7 16.3l-1.4 1.4M17.7 17.7l-1.4-1.4M7.7 7.7 6.3 6.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <div class="optLabel">Nula Light</div>
+        </div>
+      </div>
     </div>
-    <div class="label" style="line-height:1.55;font-weight:400">
+
+    <div class="themeSection">
+      <div class="themeSectionLabel">Berry</div>
+      <div class="themeDual">
+        <div class="half ${isBerryDark?'sel':''}" onclick="setTheme('berry')">
+          <div class="halfPreview pBerryDark"><svg viewBox="0 0 24 24" fill="none"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+          <div class="halfLabel">Berry<small>тёмная</small></div>
+        </div>
+        <div class="half ${isBerryLight?'sel':''}" onclick="setTheme('berry-light')">
+          <div class="halfPreview pBerryLight"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 3v2M12 19v2M21 12h-2M5 12H3M17.7 6.3l-1.4 1.4M7.7 16.3l-1.4 1.4M17.7 17.7l-1.4-1.4M7.7 7.7 6.3 6.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <div class="halfLabel">Berry<small>светлая</small></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="themeSection">
+      <div class="themeSectionLabel">Ice</div>
+      <div class="themeDual">
+        <div class="half ${isIceDark?'sel':''}" onclick="setTheme('ice')">
+          <div class="halfPreview pIceDark"><svg viewBox="0 0 24 24" fill="none"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+          <div class="halfLabel">Ice<small>тёмная</small></div>
+        </div>
+        <div class="half ${isIceLight?'sel':''}" onclick="setTheme('ice-light')">
+          <div class="halfPreview pIceLight"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 3v2M12 19v2M21 12h-2M5 12H3M17.7 6.3l-1.4 1.4M7.7 16.3l-1.4 1.4M17.7 17.7l-1.4-1.4M7.7 7.7 6.3 6.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <div class="halfLabel">Ice<small>светлая</small></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="label" style="margin-top:22px;line-height:1.55;font-weight:400">
       Данные хранятся локально на этом устройстве.<br>
       Экспорт данных — раздел «Ещё».
     </div>`;
 }
+
 function debtHistory(id){
   const d=data.debts[id];
   const payments=data.history.filter(x=>x.type==='pay' && x.text && x.text.includes(d.name)).slice(0,20);
@@ -1217,14 +1693,29 @@ function addDebt(){
   if(!n||!a){toast('Укажи название и сумму');haptic('error');return;}
   if(data.debts.length>=10){toast('Максимум 10 долгов');haptic('error');return;}
   data.debts.push({
-    name:n,
-    who:document.getElementById('d_who').value||'',
+    name:n, who:document.getElementById('d_who').value||'',
     total:a, left:a, paid:0,
     rate:+document.getElementById('d_rate').value||0,
     min:+document.getElementById('d_min').value||0,
     due:document.getElementById('d_due').value||''
   });
   closeSheet(); save(); toast('Долг добавлен'); haptic('success');
+}
+function saveDebtEdit(i){
+  const d=data.debts[i];
+  const n=document.getElementById('d_name').value.trim();
+  const a=+document.getElementById('d_amount').value;
+  if(!n||!a){toast('Укажи название и сумму');haptic('error');return;}
+  const paid=d.paid||0;
+  if(a<paid){ toast('Сумма меньше уже погашенного'); haptic('error'); return; }
+  d.name=n;
+  d.who=document.getElementById('d_who').value||'';
+  d.total=a;
+  d.left=Math.max(0, a-paid);
+  d.rate=+document.getElementById('d_rate').value||0;
+  d.min=+document.getElementById('d_min').value||0;
+  d.due=document.getElementById('d_due').value||'';
+  closeSheet(); save(); toast('Долг обновлён'); haptic('success');
 }
 function payDebt(i){
   const a=+document.getElementById('p_amount').value;
@@ -1245,7 +1736,16 @@ function addGoal(){
   const a=+document.getElementById('g_total').value;
   if(!n||!a){toast('Заполни поля');haptic('error');return;}
   data.goals.push({name:n,total:a,saved:0});
-  closeSheet(); save(); toast('Цель создана'); haptic('success');
+  closeSheet(); save(); toast('Накопление создано'); haptic('success');
+}
+function saveGoalEdit(i){
+  const g=data.goals[i];
+  const n=document.getElementById('g_name').value.trim();
+  const a=+document.getElementById('g_total').value;
+  if(!n||!a){toast('Заполни поля');haptic('error');return;}
+  if(a<g.saved){ toast('Сумма меньше накопленного'); haptic('error'); return; }
+  g.name=n; g.total=a;
+  closeSheet(); save(); toast('Накопление обновлено'); haptic('success');
 }
 function payGoal(i){
   const a=+document.getElementById('gp_amount').value;
@@ -1254,11 +1754,45 @@ function payGoal(i){
   const iso=new Date(d+'T12:00:00').toISOString();
   const g=data.goals[i];
   g.saved=Math.min(g.total,g.saved+a);
-  data.history.unshift({type:'goal',amount:a,text:'Цель: '+g.name,date:iso});
-  closeSheet(); save(); toast('Цель пополнена'); haptic('success');
+  data.history.unshift({type:'goal',amount:a,text:'Накопление: '+g.name,date:iso});
+  closeSheet(); save(); toast('Накопление пополнено'); haptic('success');
 }
-function deleteDebt(i){ if(confirm('Удалить долг?')){data.debts.splice(i,1);save();haptic('success');} }
-function deleteGoal(i){ if(confirm('Удалить цель?')){data.goals.splice(i,1);save();haptic('success');} }
+function askDeleteDebt(i){
+  const d=data.debts[i];
+  openConfirm({
+    title:'Удалить долг?',
+    text:'Платежи по нему останутся в истории операций.',
+    target:`${d.name} · остаток ${fmt(d.left)}`,
+    hint:'Восстановить долг будет нельзя.',
+    okText:'Удалить',
+    onOk:()=>{ data.debts.splice(i,1); save(); toast('Долг удалён'); haptic('success'); }
+  });
+}
+function askDeleteGoal(i){
+  const g=data.goals[i];
+  openConfirm({
+    title:'Удалить накопление?',
+    text:'Пополнения по нему останутся в истории.',
+    target:`${g.name} · накоплено ${fmt(g.saved)}`,
+    hint:'Восстановить накопление будет нельзя.',
+    okText:'Удалить',
+    onOk:()=>{ data.goals.splice(i,1); save(); toast('Накопление удалено'); haptic('success'); }
+  });
+}
+function askResetAll(){
+  openConfirm({
+    title:'Сбросить все данные?',
+    text:'Все долги, доходы, расходы, накопления и история будут удалены.',
+    target:'Это действие нельзя отменить',
+    hint:'Рекомендуем сначала сделать экспорт данных.',
+    okText:'Сбросить',
+    onOk:()=>{
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      try{ LEGACY.forEach(k=>localStorage.removeItem(k)); }catch(e){}
+      location.reload();
+    }
+  });
+}
 
 let toolTab='credit';
 function toolsSheet(){
@@ -1275,27 +1809,21 @@ function renderTool(){
   document.querySelectorAll('#toolTabs button').forEach(b=>b.classList.toggle('sel',b.dataset.t===toolTab));
   const body=document.getElementById('toolBody'); if(!body) return;
   if(toolTab==='credit'){
-    body.innerHTML=`
-      <label>Сумма кредита</label><input id="c_sum" type="number" placeholder="300000" inputmode="decimal">
+    body.innerHTML=`<label>Сумма кредита</label><input id="c_sum" type="number" placeholder="300000" inputmode="decimal">
       <label>Ставка, % годовых</label><input id="c_rate" type="number" placeholder="18" inputmode="decimal">
       <label>Срок, мес.</label><input id="c_term" type="number" placeholder="24" inputmode="decimal">
-      <button class="btn primary block" onclick="calcCredit()">Рассчитать</button>
-      <div id="c_out"></div>`;
+      <button class="btn primary block" onclick="calcCredit()">Рассчитать</button><div id="c_out"></div>`;
   } else if(toolTab==='savings'){
-    body.innerHTML=`
-      <label>Начальная сумма</label><input id="s_sum" type="number" placeholder="0" inputmode="decimal">
+    body.innerHTML=`<label>Начальная сумма</label><input id="s_sum" type="number" placeholder="0" inputmode="decimal">
       <label>Ежемесячно откладываю</label><input id="s_month" type="number" placeholder="10000" inputmode="decimal">
       <label>Ставка, % годовых</label><input id="s_rate" type="number" placeholder="8" inputmode="decimal">
       <label>Срок, мес.</label><input id="s_term" type="number" placeholder="12" inputmode="decimal">
-      <button class="btn primary block" onclick="calcSavings()">Рассчитать</button>
-      <div id="s_out"></div>`;
+      <button class="btn primary block" onclick="calcSavings()">Рассчитать</button><div id="s_out"></div>`;
   } else {
-    body.innerHTML=`
-      <label>Сумма долга</label><input id="p_sum" type="number" placeholder="100000" inputmode="decimal">
+    body.innerHTML=`<label>Сумма долга</label><input id="p_sum" type="number" placeholder="100000" inputmode="decimal">
       <label>Ставка, % годовых</label><input id="p_rate" type="number" placeholder="18" inputmode="decimal">
       <label>Плачу в месяц</label><input id="p_month" type="number" placeholder="10000" inputmode="decimal">
-      <button class="btn primary block" onclick="calcPayment()">Рассчитать</button>
-      <div id="p_out"></div>`;
+      <button class="btn primary block" onclick="calcPayment()">Рассчитать</button><div id="p_out"></div>`;
   }
 }
 function bindTools(){ renderTool(); }
@@ -1306,9 +1834,7 @@ function calcCredit(){
   if(!s||!n) return;
   const m=r>0?s*r/(1-Math.pow(1+r,-n)):s/n;
   const total=m*n, over=total-s;
-  document.getElementById('c_out').innerHTML=resultBlock([
-    ['Платёж в месяц',fmt(m)],['Всего выплат',fmt(total)],['Переплата',fmt(over)]
-  ]);
+  document.getElementById('c_out').innerHTML=resultBlock([['Платёж в месяц',fmt(m)],['Всего выплат',fmt(total)],['Переплата',fmt(over)]]);
 }
 function calcSavings(){
   const s=+document.getElementById('s_sum').value||0;
@@ -1317,9 +1843,7 @@ function calcSavings(){
   const n=+document.getElementById('s_term').value;
   if(!n) return;
   let bal=s; for(let i=0;i<n;i++) bal=bal*(1+r)+m;
-  document.getElementById('s_out').innerHTML=resultBlock([
-    ['Вложено',fmt(s+m*n)],['Итог',fmt(bal)],['Доход',fmt(bal-(s+m*n))]
-  ]);
+  document.getElementById('s_out').innerHTML=resultBlock([['Вложено',fmt(s+m*n)],['Итог',fmt(bal)],['Доход',fmt(bal-(s+m*n))]]);
 }
 function calcPayment(){
   const s=+document.getElementById('p_sum').value;
@@ -1328,17 +1852,13 @@ function calcPayment(){
   if(!s||!m) return;
   let bal=s,months=0,total=0;
   while(bal>0 && months<1200){ bal=bal*(1+r)-m; total+=m; months++; if(bal<=0) break; }
-  document.getElementById('p_out').innerHTML=resultBlock([
-    ['Срок',months+' мес.'],['Всего выплат',fmt(total)],['Переплата',fmt(total-s)]
-  ]);
+  document.getElementById('p_out').innerHTML=resultBlock([['Срок',months+' мес.'],['Всего выплат',fmt(total)],['Переплата',fmt(total-s)]]);
 }
 function resultBlock(rows){
-  return `<div class="calcResult">
-    ${rows.map(r=>`<div style="display:flex;justify-content:space-between;padding:4px 0">
+  return `<div class="calcResult">${rows.map(r=>`<div style="display:flex;justify-content:space-between;padding:4px 0">
       <span class="label">${r[0]}</span>
       <span style="font-weight:700;font-variant-numeric:tabular-nums">${r[1]}</span>
-    </div>`).join('')}
-  </div>`;
+    </div>`).join('')}</div>`;
 }
 
 let calcState={expr:'',value:'0',justResult:false};
@@ -1395,7 +1915,10 @@ function calcPress(k){
   calcState.expr+=k; calcState.value=calcState.expr||'0'; calcState.justResult=false; calcRender();
 }
 
-function renderPath(){
+/* =========================================================
+   ГЛАВНАЯ
+   ========================================================= */
+function renderHome(){
   const debt=data.debts.reduce((s,d)=>s+d.left,0);
   const start=data.debts.reduce((s,d)=>s+d.total,0);
   const paid=start-debt;
@@ -1437,20 +1960,6 @@ function renderPath(){
 
   renderInsights('pathInsights', 3);
 
-  const gw=document.getElementById('pathGoals');
-  if(!data.goals.length){
-    gw.innerHTML=`<button class="btn block" onclick="openSheet('goal')">＋ Добавить цель</button>`;
-  } else {
-    gw.innerHTML=data.goals.slice(0,3).map((g,i)=>{
-      const p=g.total?Math.min(100,Math.round(g.saved/g.total*100)):0;
-      return `<div class="goalRow" onclick="openSheet('goalpay',${i})">
-        <div class="head"><div class="name">${esc(g.name)}</div><div class="pct">${p}%</div></div>
-        <div class="bar thin"><i style="width:${p}%"></i></div>
-        <div class="sum">${fmt(g.saved)} из ${fmt(g.total)}</div>
-      </div>`;
-    }).join('') + `<button class="btn block" style="margin-top:4px" onclick="openSheet('goal')">＋ Добавить цель</button>`;
-  }
-
   const up=document.getElementById('pathUpcoming');
   const withDue=data.debts.filter(d=>d.due && d.left>0).sort((a,b)=>a.due.localeCompare(b.due)).slice(0,4);
   if(!withDue.length){
@@ -1472,6 +1981,9 @@ function renderPath(){
   }
 }
 
+/* =========================================================
+   ДОЛГИ
+   ========================================================= */
 function renderDebts(){
   const list=document.getElementById('debtList');
   setNum('debtCount', data.debts.length? (data.debts.length+' '+(data.debts.length===1?'обязательство':'обязательств')) : '—');
@@ -1504,13 +2016,169 @@ function renderDebts(){
       </div>
       ${dueInfo}
       <div class="rowActions">
-        <button class="btn primary" onclick="openSheet('pay',${i})">＋ Платёж</button>
-        <button class="btn" onclick="openSheet('history',${i})">История</button>
+        <button class="btn primary" onclick="openSheet('pay',${i})">${ICO_PLUS} Платёж</button>
+        <button class="btn" onclick="openSheet('debtEdit',${i})">${ICO_PENCIL} Изменить</button>
+        <button class="btn" onclick="openSheet('debtMenu',${i})">${ICO_MORE} Ещё</button>
       </div>
     </div>`;
   }).join('');
 }
 
+/* =========================================================
+   НАКОПЛЕНИЯ
+   ========================================================= */
+function goalMonthlyDeposits(goalName, months){
+  const keys=[];
+  for(let i=0;i<months;i++){ const d=new Date(); d.setMonth(d.getMonth()-i); keys.push(monthKey(d)); }
+  return data.history
+    .filter(x=>x.type==='goal' && x.date && keys.includes(x.date.slice(0,7)))
+    .filter(x=>goalName ? (x.text||'').includes(goalName) : true)
+    .reduce((s,x)=>s+x.amount,0);
+}
+function monthsWord(n){
+  const m10=n%10, m100=n%100;
+  if(m10===1 && m100!==11) return 'месяц';
+  if(m10>=2 && m10<=4 && (m100<10||m100>=20)) return 'месяца';
+  return 'месяцев';
+}
+function goalsForecastText(remaining, monthlyDep){
+  if(remaining<=0) return 'Накопление достигнуто';
+  if(monthlyDep<=0) return 'Темп 0 ₽/мес. — прогноза нет';
+  const m=Math.ceil(remaining/monthlyDep);
+  const d=new Date(); d.setMonth(d.getMonth()+m);
+  return '≈ '+m+' '+monthsWord(m)+' · '+MONTHS_SHORT[d.getMonth()]+' '+d.getFullYear();
+}
+function renderGoals(){
+  const wrap=document.getElementById('goalsSummaryCard');
+  const activeWrap=document.getElementById('goalsActiveList');
+  const doneWrap=document.getElementById('goalsDoneList');
+  const activeLbl=document.getElementById('goalsActiveLabel');
+  const doneLbl=document.getElementById('goalsDoneLabel');
+  const addBtn=document.getElementById('addGoalBtn');
+
+  const totalGoals = data.goals.length;
+  const doneGoals = data.goals.filter(g=>g.saved>=g.total);
+  const activeGoals = data.goals.filter(g=>g.saved<g.total);
+
+  if(!totalGoals){
+    wrap.innerHTML=`<div class="emptyBig">
+      <div class="ebIco"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3v18M7 8h7a3 3 0 1 1 0 6H7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="ebTitle">Начни копить</div>
+      <div class="ebText">Добавь первое накопление — на мечту, подушку или крупную покупку. Прогресс будет расти на глазах.</div>
+      <button class="btn primary" onclick="openSheet('goal')">${ICO_PLUS} Создать накопление</button>
+    </div>`;
+    activeLbl.style.display='none';
+    doneLbl.style.display='none';
+    activeWrap.innerHTML='';
+    doneWrap.innerHTML='';
+    addBtn.style.display='none';
+    return;
+  }
+
+  const totalAll = data.goals.reduce((s,g)=>s+g.total,0);
+  const totalSaved = data.goals.reduce((s,g)=>s+Math.min(g.saved,g.total),0);
+  const totalPct = totalAll ? Math.round(totalSaved/totalAll*100) : 0;
+  const totalRemaining = Math.max(0, totalAll - totalSaved);
+  const allMonthlyDep = goalMonthlyDeposits(null, 3) / 3;
+  const forecastAll = goalsForecastText(totalRemaining, allMonthlyDep);
+
+  let nearest = null;
+  if(activeGoals.length){
+    nearest = activeGoals.slice().sort((a,b)=>{
+      const pa = a.total ? a.saved/a.total : 0;
+      const pb = b.total ? b.saved/b.total : 0;
+      return pb - pa;
+    })[0];
+  }
+
+  wrap.innerHTML=`
+    <div class="eyebrow">Общий прогресс</div>
+    <div class="gBig">
+      <div class="v">${fmt(totalSaved)}</div>
+      <div class="of">из ${fmt(totalAll)}</div>
+    </div>
+    <div class="gSub">
+      <div class="label">${activeGoals.length} ${activeGoals.length===1?'активное':(activeGoals.length<5?'активных':'активных')} · ${doneGoals.length} достигнуто</div>
+      <div class="gPct">${totalPct}%</div>
+    </div>
+    <div class="bar" style="margin-top:12px"><i style="width:${totalPct}%"></i></div>
+
+    <div class="goalsStats">
+      <div class="st">
+        <div class="k">Средний темп</div>
+        <div class="v">${fmt(allMonthlyDep)} / мес.</div>
+      </div>
+      <div class="st">
+        <div class="k">Все накопления</div>
+        <div class="v">${forecastAll}</div>
+      </div>
+    </div>
+
+    ${nearest ? `
+      <div class="forecastRow">
+        <div class="frIco"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3v18M7 8h7a3 3 0 1 1 0 6H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="frBody">
+          <div class="frT">Ближайшее: ${esc(nearest.name)} · ${nearest.total?Math.round(nearest.saved/nearest.total*100):0}%</div>
+          <div class="frS">Осталось накопить ${fmt(Math.max(0, nearest.total - nearest.saved))}</div>
+        </div>
+      </div>
+    `:''}
+  `;
+
+  if(activeGoals.length){
+    activeLbl.style.display='';
+    activeWrap.innerHTML=activeGoals.map((g)=>{
+      const i = data.goals.indexOf(g);
+      const p = g.total?Math.min(100,Math.round(g.saved/g.total*100)):0;
+      const remaining = Math.max(0, g.total - g.saved);
+      const dep = goalMonthlyDeposits(g.name, 3) / 3;
+      const fc = goalsForecastText(remaining, dep);
+      return `<div class="goalRow">
+        <div class="head"><div class="name">${esc(g.name)}</div><div class="pct">${p}%</div></div>
+        <div class="bar thin"><i style="width:${p}%"></i></div>
+        <div class="sum">${fmt(g.saved)} из ${fmt(g.total)} · осталось ${fmt(remaining)}</div>
+        <div class="forecast">
+          <span class="fIco">${ICO_CLOCK}</span>
+          <span>${fc}</span>
+        </div>
+        <div class="gActions">
+          <button onclick="openSheet('goalpay',${i})">${ICO_PLUS} Пополнить</button>
+          <button onclick="openSheet('goalEdit',${i})" aria-label="Изменить">${ICO_PENCIL}</button>
+          <button class="danger" onclick="askDeleteGoal(${i})" aria-label="Удалить">${ICO_TRASH}</button>
+        </div>
+      </div>`;
+    }).join('');
+  } else {
+    activeLbl.style.display='none';
+    activeWrap.innerHTML='';
+  }
+
+  if(doneGoals.length){
+    doneLbl.style.display='';
+    doneWrap.innerHTML=doneGoals.map((g)=>{
+      const i = data.goals.indexOf(g);
+      return `<div class="goalRow done">
+        <div class="head"><div class="name">🎉 ${esc(g.name)}</div><div class="pct">100%</div></div>
+        <div class="bar thin"><i style="width:100%"></i></div>
+        <div class="sum">Накоплено ${fmt(g.saved)} из ${fmt(g.total)}</div>
+        <div class="gActions">
+          <button onclick="openSheet('goalEdit',${i})" aria-label="Изменить">${ICO_PENCIL} Изменить</button>
+          <button class="danger" onclick="askDeleteGoal(${i})" aria-label="Удалить">${ICO_TRASH} Удалить</button>
+        </div>
+      </div>`;
+    }).join('');
+  } else {
+    doneLbl.style.display='none';
+    doneDoneListEmpty(doneWrap);
+  }
+
+  addBtn.style.display='';
+}
+function doneDoneListEmpty(w){ w.innerHTML=''; }
+
+/* =========================================================
+   ДЕНЬГИ
+   ========================================================= */
 let moneyPeriod='month';
 let moneyDate=new Date();
 function setMoneyPeriod(p){ moneyPeriod=p; haptic('select'); renderMoney(); }
@@ -1595,6 +2263,9 @@ function renderMoney(){
   }).join('');
 }
 
+/* =========================================================
+   АНАЛИТИКА
+   ========================================================= */
 const AN={period:'month',cat:'expense',chart:'donut',date:new Date()};
 AN.date.setHours(12,0,0,0);
 const COLORS=['#39FF88','#22D3EE','#A78BFA','#F472B6','#FBBF24','#60A5FA','#FB7185','#34D399','#E879F9','#818CF8'];
@@ -1646,7 +2317,7 @@ function anGetOpsFor(cat,range){
     if(cat==='income') data.income.filter(x=>dateKey(x.date)===k).forEach(x=>out.push({date:k,amount:x.amount,name:x.source||'Доход'}));
     else if(cat==='expense') data.expenses.filter(x=>dateKey(x.date)===k).forEach(x=>out.push({date:k,amount:x.amount,name:x.category||'Расход'}));
     else if(cat==='debt') data.history.filter(x=>x.type==='pay' && dateKey(x.date)===k).forEach(x=>out.push({date:k,amount:x.amount,name:(x.text||'').replace(/^Платёж:\s*/,'')||'Платёж'}));
-    else data.history.filter(x=>x.type==='goal' && dateKey(x.date)===k).forEach(x=>out.push({date:k,amount:x.amount,name:(x.text||'').replace(/^Цель:\s*/,'')||'Цель'}));
+    else data.history.filter(x=>x.type==='goal' && dateKey(x.date)===k).forEach(x=>out.push({date:k,amount:x.amount,name:(x.text||'').replace(/^(Цель|Накопление):\s*/,'')||'Накопление'}));
     cur.setDate(cur.getDate()+1);
   }
   return out;
@@ -1682,7 +2353,7 @@ function renderAn(){
 
   renderInsights('anInsights', 4);
 
-  const mapTitle={income:'Доходы',expense:'Расходы',debt:'Платежи по долгам',goal:'Пополнения целей'};
+  const mapTitle={income:'Доходы',expense:'Расходы',debt:'Платежи по долгам',goal:'Пополнения накоплений'};
   document.getElementById('anLabelTop').textContent=mapTitle[AN.cat]+' за период';
 
   const sum=anSum(0), sumPrev=anSum(-1);
@@ -1750,7 +2421,7 @@ function renderInsights(targetId, max){
     const m=Math.ceil(debt/guess);
     list.push({ico:'path',ttl:`При текущем темпе ты достигнешь цели через ${m} мес.`,sub:`При ${fmt(guess)} в месяц`});
   } else if(debt===0){
-    list.push({ico:'ok',ttl:'Долги закрыты',sub:'Можно фокусироваться на целях'});
+    list.push({ico:'ok',ttl:'Долги закрыты',sub:'Можно фокусироваться на накоплениях'});
   }
 
   if(!list.length){ wrap.innerHTML=`<div class="empty">Добавь операции — покажу инсайты</div>`; return; }
@@ -1785,7 +2456,7 @@ function renderDonut(groups,total){
   const mainPct=Math.round(groups[0].amount/total*100);
   return `<div class="chartWrap">
     <svg class="chartSvg" viewBox="0 0 ${size} ${size}">
-      <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="${sw}"/>
+      <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="rgba(128,128,128,.15)" stroke-width="${sw}"/>
       ${segs}
     </svg>
     <div class="donutCenter"><div class="cval">${mainPct}%</div><div class="clab">${esc(groups[0].name)}</div></div>
@@ -1840,7 +2511,7 @@ function renderScenario(){
   ];
   body.innerHTML=`
     <div style="display:flex;gap:14px;align-items:center;padding:4px 0 14px;border-bottom:1px solid var(--line)">
-      <div style="width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:var(--accent);color:#09090B;flex-shrink:0">
+      <div style="width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:var(--accent);color:var(--bg);flex-shrink:0">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3v18M7 8h7a3 3 0 1 1 0 6H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
       <div>
@@ -1858,7 +2529,7 @@ function renderScenario(){
       ${presets.map(p=>`<button data-p="${p.k}" class="${scenario.preset===p.k?'sel':''}" onclick="setScenarioPreset('${p.k}',${p.v})">${p.l}</button>`).join('')}
     </div>
     <div style="margin-top:16px;position:relative;height:36px;display:flex;align-items:center;touch-action:none;user-select:none" id="scSlider" data-min="500" data-max="${Math.max(200000,debt)}" data-step="500" data-no-swipe="1">
-      <div style="position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:6px;border-radius:99px;background:rgba(255,255,255,.06);overflow:hidden">
+      <div style="position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:6px;border-radius:99px;background:rgba(128,128,128,.15);overflow:hidden">
         <div id="scFill" style="height:100%;width:0;border-radius:99px;background:var(--accent)"></div>
       </div>
       <div id="scThumb" style="position:absolute;top:50%;left:0;width:26px;height:26px;border-radius:50%;background:var(--accent);border:3px solid var(--bg);transform:translate(-50%,-50%);pointer-events:none;transition:transform .12s ease"></div>
@@ -1949,64 +2620,60 @@ function importData(){
       try{
         const p=JSON.parse(ev.target.result);
         if(!p || typeof p!=='object') throw Error('bad');
-        if(!confirm('Импорт заменит все текущие данные. Продолжить?')) return;
-        data=normalize(p);
-        scenario.init=false;
-        save(); toast('Импорт выполнен'); haptic('success');
+        openConfirm({
+          title:'Импортировать данные?',
+          text:'Текущие данные будут заменены содержимым файла.',
+          target:f.name,
+          hint:'Отменить это действие нельзя.',
+          okText:'Импортировать',
+          onOk:()=>{
+            data=normalize(p);
+            scenario.init=false;
+            save(); toast('Импорт выполнен'); haptic('success');
+          }
+        });
       }catch(e){ toast('Файл повреждён'); haptic('error'); }
     };
     r.readAsText(f);
   };
   inp.click();
 }
-function resetAll(){
-  if(!confirm('Сбросить все данные Nula?')) return;
-  if(!confirm('Точно? Это действие нельзя отменить.')) return;
-  try{ localStorage.removeItem(KEY); }catch(e){}
-  try{ LEGACY.forEach(k=>localStorage.removeItem(k)); }catch(e){}
-  location.reload();
-}
 
 function render(){
   applyTheme();
-  renderPath();
+  renderHome();
   renderDebts();
   renderMoney();
   renderAn();
+  renderGoals();
   const btn=document.getElementById('notifyBtn');
   if(btn) btn.textContent = data.notify ? 'Выключить напоминания' : 'Включить напоминания';
 }
 
-/* =========================================================
-   ЗАПУСК: splash → (onboarding если впервые) → app
-   ========================================================= */
 applyTheme();
 render();
 setScreen(0,{force:true,haptic:false});
 
+/* =========================================================
+   СТАРТ: splash → welcome (если первый раз) → app
+   ========================================================= */
 window.addEventListener('load',()=>{
   const splash=document.getElementById('splash');
   const app=document.getElementById('app');
-  const ob=document.getElementById('onboarding');
 
-  // Splash висит ~1.8 сек, затем плавно уходит
   setTimeout(()=>{
     splash.classList.add('hide');
-
-    // Показываем app (fade-in) под splash
     app.classList.add('ready');
 
-    // Если онбординг не пройден — показываем его поверх
     if(!data.onboarded){
-      setTimeout(()=>{
-        ob.classList.add('show');
-        obSetIndex(0);
-      }, 220);
+      setTimeout(()=>showWelcome(),260);
+    } else if(!data.tourDone){
+      // если пользователь прошёл welcome, но не тур — не стартуем тур автоматически
+      // он может пройти его из «Ещё»
     }
 
-    // Убираем splash из DOM после fade
-    setTimeout(()=>{ try{splash.remove()}catch(e){} }, 700);
-  }, 1800);
+    setTimeout(()=>{ try{splash.remove()}catch(e){} },700);
+  },1800);
 });
 </script>
 </body>
